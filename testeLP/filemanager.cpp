@@ -35,6 +35,22 @@ char *getId(char *linha){
     return id;
 }
 
+int getReferenceId(char *linha, int inicio, int fim){
+    char *valor;
+    int c = 0, i;
+    int id;
+
+    valor = new char[fim-inicio+1];
+    for(i = inicio; i < fim; i++){
+        valor[c] = linha[i];
+        c++;
+    }
+
+    id = atoi(valor);
+    delete valor;
+    return id;
+}
+
 int buscaById(int Id, int size, const char *arq){
     FILE *data;
     char *linha, *id;
@@ -54,7 +70,7 @@ int buscaById(int Id, int size, const char *arq){
     }
 
     rewind(data);
-    linha = new char[size * sizeof(char)];
+    linha = new char[size];
 
     while (!feof(data)){
         position = ftell(data);
@@ -84,7 +100,7 @@ char *Otd(int size, int position, const char *arq){ //other datas, pega os regis
     if(position < 0){
         return NULL;
     }
-    data = fopen(arq, "a+");
+    data = fopen(arq, "r");
     if(data == NULL){ //erro na criação do arquivo ou abertura do arquivo
         return NULL;
     }

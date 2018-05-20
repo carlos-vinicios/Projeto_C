@@ -11,8 +11,10 @@ Capital capitalById(int id); //carrega as informações (dados do usuario) para ex
 
 Capitais *listAllCapitais(); //lista todos os capitais
 
-Capitais *listByDate(char *data); //lista os recebimentos de capital com base em uma data
+Capitais *filterCapitalByMonth(Capitais *listCapitais, char *date); //lista os recebimentos de capital com base em uma data
 
-Capitais *listByValue(float valor); //lista os recebimentos de capital com base em um valor
+Capitais *filterCapitalBetweenDate(Capitais *listCapitais, char *initDate, char *endDate); //lista os gastos com base em dois meses dados
+
+Capitais *filterCapitalBetweenValue(Capitais *listCapitais, float init_value, float end_value); //lista os recebimentos de capital com base em um valor
 
 #endif // CAPITAL_H

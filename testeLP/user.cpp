@@ -53,7 +53,6 @@ Usuario userDataToStruct(char *linha){
     return user;
 }
 
-
 int storeUser(Usuario user){
     FILE *data;
     if(!(strlen(user.nome) > 0)){
@@ -152,7 +151,7 @@ Usuarios *listAllUsers(){
     fseek(data, 0, SEEK_END);
     size = ftell(data);
     rewind(data);
-    linha = new char[size * sizeof(char)];
+    linha = new char[size];
 
     listUsers = new Usuarios();
     listUsers->next = NULL;
@@ -173,6 +172,7 @@ Usuarios *listAllUsers(){
         }
     }
 
+    delete linha;
     return listUsers;
 };
 
@@ -192,7 +192,7 @@ Usuario userById(int id){
     fseek(data, 0, SEEK_END);
     size = ftell(data);
     rewind(data);
-    linha = new char[size * sizeof(char)];
+    linha = new char[size];
     position = buscaById(id, size, UsuarioRota);
 
     if(position < 0){

@@ -1,18 +1,19 @@
 # depslib dependency file v1.0
-1526272217 source:c:\users\desktop\documents\cpp\testelp\main.cpp
+1526783922 source:c:\users\desktop\documents\cpp\testelp\main.cpp
 	<iostream>
+	<string.h>
 	"datacontrol.h"
-	"user.h"
+	"capital.h"
 
 1526272181 c:\users\desktop\documents\cpp\testelp\user.h
 
-1526271395 source:c:\users\desktop\documents\cpp\testelp\filemanager.cpp
+1526784103 source:c:\users\desktop\documents\cpp\testelp\filemanager.cpp
 	<iostream>
 	<string.h>
 	"stdlib.h"
 	"stdio.h"
 
-1526272349 source:c:\users\desktop\documents\cpp\testelp\user.cpp
+1526652296 source:c:\users\desktop\documents\cpp\testelp\user.cpp
 	<iostream>
 	"string.h"
 	"stdlib.h"
@@ -20,19 +21,24 @@
 	"datacontrol.h"
 	"filemanager.h"
 
-1526271411 c:\users\desktop\documents\cpp\testelp\filemanager.h
+1526648632 c:\users\desktop\documents\cpp\testelp\filemanager.h
 
 1526161940 c:\users\desktop\documents\cpp\testelp\data_control.h
 
-1526269340 c:\users\desktop\documents\cpp\testelp\datacontrol.h
+1526658348 c:\users\desktop\documents\cpp\testelp\datacontrol.h
 
 1526190393 source:c:\users\desktop\documents\cpp\testelp\datacontrol.cpp
 
-1526271932 source:c:\users\desktop\documents\cpp\testelp\capital.cpp
+1526803427 source:c:\users\desktop\documents\cpp\testelp\capital.cpp
 	<iostream>
 	"stdlib.h"
 	"stdio.h"
 	"string.h"
+	"math.h"
 	"datacontrol.h"
 	"filemanager.h"
+
+1526748440 c:\users\desktop\documents\cpp\testelp\capital.h
+
+1526658273 source:c:\users\desktop\documents\cpp\testelp\gasto.cpp
 

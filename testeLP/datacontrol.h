@@ -19,14 +19,15 @@ struct Users {
     struct Users *next;
 };
 
-typedef struct Users Usuarios;
+typedef struct Users Usuarios; //define uma nova estrutura de dados
 const char UsuarioRota[] = "Data\\user_data.txt";
 
 struct Capital {
     int id;
-    char data[10];
+    char data[11];
     char desc[MAX_DESC];
     float valor;
+    int id_user;
 };
 
 struct capitais {
@@ -34,7 +35,23 @@ struct capitais {
     struct capitais *next;
 };
 
-typedef struct capitais Capitais;
+typedef struct capitais Capitais; //define uma nova estrutura de dado para lista de recebimento de capitais
 const char CapitalRota[] = "Data\\capital_data.txt";
+
+struct Gasto {
+    int id;
+    char data[11];
+    char desc[MAX_DESC];
+    float valor;
+    int id_user;
+};
+
+struct gastos {
+    Gasto gasto;
+    struct gastos *next;
+};
+
+typedef struct gastos Gastos; //define uma nova estrutura de dado para lista de gastos
+const char GastoRota[] = "Data\\gasto_data.txt";
 
 #endif // DATA_CONTROL_H

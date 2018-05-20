@@ -9,6 +9,8 @@ int lastId(const char *arq); //retorna o último id documento
 
 char *getId(char *linha); //retorna o id da linha
 
+int getReferenceId(char *linha, int inicio, int fim);
+
 void dataCharCol(char *linha, int inicio, int fim, char *campo); //retorna os valores de uma coluna para um certo endereço de char
 
 float getValor(char *linha, int inicio, int fim);

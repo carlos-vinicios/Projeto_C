@@ -38,6 +38,8 @@
 		<Unit filename="datacontrol.h" />
 		<Unit filename="filemanager.cpp" />
 		<Unit filename="filemanager.h" />
+		<Unit filename="gasto.cpp" />
+		<Unit filename="gasto.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="user.cpp" />
 		<Unit filename="user.h" />
