@@ -35,6 +35,32 @@ char *getId(char *linha){
     return id;
 }
 
+int charToTstmp(char *date){ //converte uma data em array de char para "timestamp", criado por mim, com base em uma lógica que da certo
+    int tstmp = 0, i, j = 0, exec = 0;
+    char dmy[5] = {'\0','\0','\0','\0','\0'}; //precisa iniciar pois causa erro em execuções subsequentes
+
+    for(i = 0; i < strlen(date); i++){
+        if(date[i] != '/'){ //se for diferente do separador, copia para a variavel de auxilio
+            dmy[j] = date[i];
+            j++;
+        }else{
+            exec++;
+            j = 0;
+            switch(exec){
+                case 1: //dia
+                    tstmp+= atoi(dmy) * 24; //horas de um dia
+                    break;
+                case 2: //mes
+                    tstmp+= atoi(dmy) * 24 * 30; //horas de um mes
+                    break;
+            }
+        }
+    }
+    tstmp+= atoi(dmy) * 24 * 30 * 12; //horas do um ano
+
+    return tstmp; //horas totais de dia, mês e ano da data passada
+}
+
 int getReferenceId(char *linha, int inicio, int fim){
     char *valor;
     int c = 0, i;
@@ -87,34 +113,6 @@ int buscaById(int Id, int size, const char *arq){
     delete id;
     fclose(data);
     return -1;
-}
-
-char *Otd(int size, int position, const char *arq){ //other datas, pega os registros após o registro que irá ser modificado, protegendo contra sobreposição de dados
-    FILE *data;
-    char *buffer, *otd;
-    int position1;
-
-    if(size <= 0){
-        return NULL;
-    }
-    if(position < 0){
-        return NULL;
-    }
-    data = fopen(arq, "r");
-    if(data == NULL){ //erro na criação do arquivo ou abertura do arquivo
-        return NULL;
-    }
-
-    buffer = new char[(size-position)*sizeof(char)]; //inicializa a varivel para receber o gets de deslocamento do ponteiro
-    fseek(data, position, SEEK_SET);
-    fgets(buffer, size - position, data); //realiza o deslocamento do ponteiro para o final da linha
-    position1 = ftell(data); //pega a posição do ponteiro no final da linha que queremos modificar
-    fseek(data, position1, SEEK_SET); //define o ponteiro para a posição lida
-    otd = new char[(size-position1)*sizeof(char)]; //define os other datas
-    fread(otd, (size-position1)*sizeof(char), 1, data);
-    delete buffer;
-    fclose(data);
-    return otd;
 }
 
 int lastId(const char *arq){ //retorna o útlimo id registrado no arquivo

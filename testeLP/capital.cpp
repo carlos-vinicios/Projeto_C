@@ -16,32 +16,6 @@ void writeData(FILE *data, Capital capital){
     fprintf(data, "user=%d;", capital.id_user);
 }
 
-int charToTstmp(char *date){ //converte uma data em array de char para "timestamp", criado por mim, com base em uma lógica que da certo
-    int tstmp = 0, i, j = 0, exec = 0;
-    char dmy[5] = {'\0','\0','\0','\0','\0'}; //precisa iniciar pois causa erro em execuções subsequentes
-
-    for(i = 0; i < strlen(date); i++){
-        if(date[i] != '/'){ //se for diferente do separador, copia para a variavel de auxilio
-            dmy[j] = date[i];
-            j++;
-        }else{
-            exec++;
-            j = 0;
-            switch(exec){
-                case 1: //dia
-                    tstmp+= atoi(dmy) * 24; //horas de um dia
-                    break;
-                case 2: //mes
-                    tstmp+= atoi(dmy) * 24 * 30; //horas de um mes
-                    break;
-            }
-        }
-    }
-    tstmp+= atoi(dmy) * 24 * 30 * 12; //horas do um ano
-
-    return tstmp; //horas totais de dia, mês e ano da data passada
-}
-
 Capital capitalDataToStruct(char *linha){
     Capital capital;
     int i, index, exec = 0;
@@ -83,7 +57,7 @@ int storeCapital(Capital capital){
     if(!(strlen(capital.desc) > 0)){
         return 0;
     }
-    if(capital.data < 0){
+    if(!(strlen(capital.data) > 0)){
         return 0;
     }
     if(capital.id_user > lastId(UsuarioRota)){
@@ -100,59 +74,83 @@ int storeCapital(Capital capital){
         fputc('\n', data);
     }
     writeData(data, capital);
+    if(capital.id == 1){
+        fputc('\n', data);
+    }
     fclose(data);
     return 1;
 }
 
 int updateCapital(Capital capital){
     FILE *data;
-    int size, position;
-    char *endData;
+    int size, first=1, newLen;
+    char *newTextFile, *newLine, *linha;
     if(!(strlen(capital.data) > 0)){
         return 0;
     }
     if(!(strlen(capital.desc) > 0)){
         return 0;
     }
-    if(capital.data < 0){
+    if(!(strlen(capital.data) > 0)){
         return 0;
     }
     if(capital.id_user > lastId(UsuarioRota)){
         return 0;
     }
-
-    data = fopen(CapitalRota, "r+");
+    data = fopen(CapitalRota, "r");
     if(data == NULL){
         return 0;
     }
     fseek(data, 0, SEEK_END);
     size = ftell(data);
+    rewind(data);
+    newLine = new char[sizeof(capital) + 32]; //declara um array de caracteres com o tamanho necessario para armezenar a nova linha
+    newLen = sprintf(newLine, "id=%d;data=%s;desc=%s;valor=%.2f;user=%d;", capital.id, capital.data, capital.desc, capital.valor, capital.id_user);
+    if(capital.id < lastId(CapitalRota)){ //caso não seja o último do array, realiza uma quebra de linha
+        strcat(newLine, "\n");
+    }
+    newTextFile = new char[size+newLen];
+    linha = new char[size];
+    while(!feof(data)){
+        fgets(linha, size * sizeof(char), data);
+        if(linha[0] != '\n'){
+            if(atoi(getId(linha)) != capital.id){
+                if(first){
+                    strcpy(newTextFile, linha);
+                    first = 0;
+                }else{
+                    strcat(newTextFile, linha);
+                }
+            }else{
+                strcat(newTextFile, newLine);
+            }
+        }
+    }
 
-    position = buscaById(capital.id, size, CapitalRota);
-    endData = Otd(size, position, CapitalRota); //resto dos registros após o id dado
+    fclose(data);
 
-    if(endData == NULL){ //caso ocorra algum erro no prcocesso de armazenamento dos registros posteriores, retorna erro
+    data = fopen(CapitalRota, "w");
+
+    if(data == NULL){
+        fclose(data);
+        delete newLine;
+        delete newTextFile;
+        delete linha;
         return 0;
     }
-    if(position < 0){//não encontrou o id no arquivo
-        return 0;
-    }
 
-    fseek(data, position, SEEK_SET); //move o ponteiro para o inicio da linha contendo o id dado
-
-    writeData(data, capital);
-    fputc('\n', data);
-    fputs(endData, data);
-    delete endData;
-    fclose(data); //fecha a conexão com o arquivo
+    fputs(newTextFile, data);
+    delete newLine;
+    delete newTextFile;
+    delete linha;
+    fclose(data);
     return 1;
 }
 
-
 int deleteCapital(int id){ //exclui o capital recebido
     FILE *data;
-    int position, size, first =  1;
-    char *linha, *newTextFile, *campo;
+    int size, first =  1;
+    char *linha, *newTextFile;
 
     data = fopen(CapitalRota, "r");
 
@@ -282,29 +280,15 @@ Capitais *listAllCapitais(){
 
 Capitais *filterCapitalByMonth(Capitais *listCapitais, char *month){ //lista os recebimentos de capital com base em uma data
     Capitais *lista, *before, *after;
-    int pos = 0, exec;
-
-    for(lista = listCapitais; lista != NULL; lista = lista->next){
+    after = listCapitais->next;
+    for(lista = listCapitais->next; lista != NULL; lista = lista->next){
+        before = after;
         if(strstr(lista->capital.data, month) == NULL){
-            exec = 0;
-            do{
-                if(exec == 0){
-                    lista = listCapitais;
-                }else{
-                    lista = lista->next;
-                }
-                if(exec = pos - 1){
-                    before = lista;
-                }
-                exec++;
-            }while(exec <= pos);
-            after = lista;
-            before->next = after;
+            after = lista->next;
         }
-        pos++;
+        before->next = after->next;
     }
-
-    return before;
+    return listCapitais;
 }
 
 Capitais *filterCapitalBetweenDate(Capitais *listCapitais, char *initDate, char *endDate){
@@ -379,4 +363,3 @@ Capitais *filterCapitalBetweenValue(Capitais *listCapitais, float init_valor, fl
 
     return filtered;
 }
-

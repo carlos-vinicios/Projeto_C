@@ -43,6 +43,7 @@ struct Gasto {
     char data[11];
     char desc[MAX_DESC];
     float valor;
+    int tipo;
     int id_user;
 };
 

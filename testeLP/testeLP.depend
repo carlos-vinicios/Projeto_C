@@ -42,3 +42,51 @@
 
 1526658273 source:c:\users\desktop\documents\cpp\testelp\gasto.cpp
 
+1526190393 source:c:\users\desktop\documents\github\projeto_c\testelp\datacontrol.cpp
+
+1527490832 source:c:\users\desktop\documents\github\projeto_c\testelp\user.cpp
+	<iostream>
+	"string.h"
+	"stdlib.h"
+	"stdio.h"
+	"datacontrol.h"
+	"filemanager.h"
+
+1527383847 c:\users\desktop\documents\github\projeto_c\testelp\datacontrol.h
+
+1527489112 c:\users\desktop\documents\github\projeto_c\testelp\filemanager.h
+
+1527490727 source:c:\users\desktop\documents\github\projeto_c\testelp\capital.cpp
+	<iostream>
+	"stdlib.h"
+	"stdio.h"
+	"string.h"
+	"math.h"
+	"datacontrol.h"
+	"filemanager.h"
+
+1527489106 source:c:\users\desktop\documents\github\projeto_c\testelp\filemanager.cpp
+	<iostream>
+	<string.h>
+	"stdlib.h"
+	"stdio.h"
+
+1527507988 source:c:\users\desktop\documents\github\projeto_c\testelp\main.cpp
+	<iostream>
+	<string.h>
+	"datacontrol.h"
+	"gasto.h"
+
+1527384161 c:\users\desktop\documents\github\projeto_c\testelp\gasto.h
+
+1527511265 source:c:\users\desktop\documents\github\projeto_c\testelp\gasto.cpp
+	<iostream>
+	"stdlib.h"
+	"stdio.h"
+	"string.h"
+	"math.h"
+	"datacontrol.h"
+	"filemanager.h"
+
+1526748440 c:\users\desktop\documents\github\projeto_c\testelp\capital.h
+

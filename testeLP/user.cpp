@@ -86,8 +86,8 @@ int storeUser(Usuario user){
 
 int updateUser(Usuario user){
     FILE *data;
-    int position, size;
-    char *endData;
+    int position, size, newLen, first=1;
+    char *newTextFile, *newLine, *linha;
     if(user.id < (1 || lastId(UsuarioRota))){
         return 0;
     }
@@ -106,32 +106,53 @@ int updateUser(Usuario user){
     if(user.renda < 0){
         return 0;
     }
-
-    data = fopen(UsuarioRota, "r+");
-
-    if(data == NULL){ //erro na criação do arquivo ou abertura do arquivo
+    data = fopen(UsuarioRota, "r");
+    if(data == NULL){
         return 0;
     }
-
     fseek(data, 0, SEEK_END);
-    size = ftell(data); //tamanho total do documento
+    size = ftell(data);
+    rewind(data);
+    newLine = new char[sizeof(user) + 29]; //declara um array de caracteres com o tamanho necessario para armezenar a nova linha
+    newLen = sprintf(newLine, "id=%d;nome=%s;password=%s;nasc=%s;desc=%d;renda=%.2f;", user.id, user.nome, user.password, user.nasc, user.desc, user.renda);
+    if(user.id < lastId(UsuarioRota)){ //caso não seja o último do array, realiza uma quebra de linha
+        strcat(newLine, "\n");
+    }
+    newTextFile = new char[size+newLen];
+    linha = new char[size];
+    while(!feof(data)){
+        fgets(linha, size * sizeof(char), data);
+        if(linha[0] != '\n'){
+            if(atoi(getId(linha)) != user.id){
+                if(first){
+                    strcpy(newTextFile, linha);
+                    first = 0;
+                }else{
+                    strcat(newTextFile, linha);
+                }
+            }else{
+                strcat(newTextFile, newLine);
+            }
+        }
+    }
 
-    position = buscaById(user.id, size, UsuarioRota);
-    endData = Otd(size, position, UsuarioRota); //resto dos registros após o id dado
+    fclose(data);
 
-    if(endData == NULL){ //caso ocorra algum erro no prcocesso de armazenamento dos registros posteriores, retorna erro
+    data = fopen(UsuarioRota, "w");
+
+    if(data == NULL){
+        fclose(data);
+        delete newLine;
+        delete newTextFile;
+        delete linha;
         return 0;
     }
-    if(position < 0){//não encontrou o id no arquivo
-        return 0;
-    }
 
-    fseek(data, position, SEEK_SET); //move o ponteiro para o inicio da linha contendo o id dado
-
-    writeData(data, user);
-    fputs(endData, data);
-    delete endData;
-    fclose(data); //fecha a conexão com o arquivo
+    fputs(newTextFile, data);
+    delete newLine;
+    delete newTextFile;
+    delete linha;
+    fclose(data);
     return 1;
 }
 

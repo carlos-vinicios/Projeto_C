@@ -3,11 +3,11 @@
 
 int buscaById(int id, int size, const char *arq); //retorna a posição do ponteiro do arquivo para o id dado
 
-char *Otd(int size, int position, const char *arq); //pega todo o resto do arquivo com após uma dada posição
-
 int lastId(const char *arq); //retorna o último id documento
 
 char *getId(char *linha); //retorna o id da linha
+
+int charToTstmp(char *date); //converte uma data em array de char para "timestamp", criado por mim, com base em uma lógica que da certo
 
 int getReferenceId(char *linha, int inicio, int fim);
 

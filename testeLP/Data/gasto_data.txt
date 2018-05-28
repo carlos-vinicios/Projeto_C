@@ -1,0 +1,5 @@
+id=1;data=25/05/2018;desc=fgdfgg;valor=14.00;tipo=1;user=4;
+id=2;data=27/02/2018;desc=teste;valor=51.00;tipo=1;user=2;
+id=3;data=25/04/2018;desc=maisumaveztentandodarupdate;valor=458.00;tipo=1;user=4;
+id=5;data=20/05/2018;desc=teste;valor=540.00;tipo=1;user=3;
+id=6;data=28/05/2018;desc=teste;valor=45.00;tipo=1;user=3;

@@ -1,69 +1,79 @@
 #include <iostream>
 #include <string.h>
 #include "datacontrol.h"
-#include "capital.h"
+#include "gasto.h"
 
 using namespace std;
 
-void exibe(Capitais *capitais)
+void exibe(Gastos *gastos)
 {
-	Capitais *tmp;
-	tmp = capitais->next;
+	Gastos *tmp;
+	tmp = gastos->next;
 	cout << "Lista:\n";
 	while( tmp != NULL){
-		cout << tmp->capital.id << "\n";
-		cout << tmp->capital.data << "\n";
-		cout << tmp->capital.id_user << "\n";
+		cout << tmp->gasto.id << "\n";
+		cout << tmp->gasto.data << "\n";
+		cout << tmp->gasto.id_user << "\n";
 		tmp = tmp->next;
 		cout << "\n\n\n\n";
 	}
 }
 
 void cadastra(){
-    Capital capital;
+    Gasto gasto;
     int result;
 
-    cin >> capital.data;
-    cin >> capital.desc;
-    cin >> capital.valor;
-    cin >> capital.id_user;
+    cin >> gasto.data;
+    cin >> gasto.desc;
+    cin >> gasto.valor;
+    cin >> gasto.tipo;
+    cin >> gasto.id_user;
 
-    result = storeCapital(capital);
+    result = storeGasto(gasto);
+
+    if(result){
+        cout << "Cadastro realizado com sucesso";
+    }else{
+        cout << "Erro";
+    }
+}
+
+void update(Gasto gasto){
+    int result;
+
+    cin >> gasto.data;
+    cin >> gasto.desc;
+    cin >> gasto.valor;
+    cin >> gasto.tipo;
+    cin >> gasto.id_user;
+
+    result = updateGasto(gasto);
+
+    if(result){
+        cout << "Alteração realizada com sucesso";
+    }else{
+        cout << "Erro na alteração";
+    }
+}
+
+void deletar(){
+    int result;
+
+    result = deleteGasto(2);
 
     if(result){
         cout << "Cadastro realizado com sucesso";
     }
 }
 
-void update(){
-
-}
-
 int main()
 {
-    Capital capital;
-    int result;
-//    Capitais *capitais, *filtrado;
-//    char date1[] = {"18/05/2018"}, date2[] = {"16/05/2018"};
-//
-//    capitais = listAllCapitais();
-//
-//    filtrado = filterCapitalBetweenValue(capitais, 2000, 3500);
-//
-//    exibe(filtrado);
+    Gastos *gastos, *filtrado;
 
-//    capital.id = 5;
-//    strcpy(capital.data, "19/05/2018");
-//    strcpy(capital.desc, "Apenas um teste 2");
-//    capital.valor = 1452.50;
-//    capital.id_user = 5;
+    gastos = listAllGastos();
+    filtrado = filterGastoByMonth(gastos, "05/2018");
 
-    result = deleteCapital(3);
+    exibe(filtrado);
 
-    if(result){
-        cout << "Com sucesso";
-    }else{
-        cout << "Falhou";
-    }
     return 0;
 }
