@@ -14,13 +14,11 @@ void writeData(FILE *data, Usuario user){
     fprintf(data, "nasc=%s;", user.nasc);
     fprintf(data, "desc=%s;", user.desc);
     fprintf(data, "renda=%.2f;", user.renda);
-    fputc('\n', data);
 }
 
 Usuario userDataToStruct(char *linha){
     Usuario user;
-    int i, j, index, exec = 0;
-
+    int i, index, exec = 0;
     for (i = 0; i < strlen(linha); i++) {
         if(linha[i] == ';'){//procurando pelos campos
           index = i - 1;
@@ -42,14 +40,13 @@ Usuario userDataToStruct(char *linha){
               dataCharCol(linha, index, i, user.desc);
               break;
             case 5: //pegando o valor da renda
-              user.renda = getValor(linha, index, i);
+              user.renda = dataFloatCol(linha, index, i);
               break;
           }
           exec++;
         }
     }
     user.id = atoi(getId(linha));
-
     return user;
 }
 
@@ -67,27 +64,25 @@ int storeUser(Usuario user){
     if(!(strlen(user.desc) > 0)){
         return 0;
     }
-    if(user.renda < 0){
+    if(user.renda <= 0){
         return 0;
     }
-
     data = fopen(UsuarioRota, "a+");
-
     if(data == NULL){ //erro na criação do arquivo ou abertura do arquivo
         return 0;
     }
-
     user.id = lastId(UsuarioRota) + 1;
+    if(user.id != 1){
+        fputc('\n', data);
+    }
     writeData(data, user);
-
     fclose(data); //fecha a conexão com o arquivo
     return 1;
 }
 
 int updateUser(Usuario user){
-    FILE *data;
-    int position, size, newLen, first=1;
-    char *newTextFile, *newLine, *linha;
+    int lineLen, response;
+    char *newLine;
     if(user.id < (1 || lastId(UsuarioRota))){
         return 0;
     }
@@ -106,54 +101,43 @@ int updateUser(Usuario user){
     if(user.renda < 0){
         return 0;
     }
+    newLine = new char[sizeof(user) + 29]; //declara um array de caracteres com o tamanho necessario para armezenar a nova linha
+    lineLen = sprintf(newLine, "id=%d;nome=%s;password=%s;nasc=%s;desc=%s;renda=%.2f;", user.id, user.nome, user.password, user.nasc, user.desc, user.renda);
+    if(user.id < lastId(UsuarioRota)) //caso não seja o último do array, realiza uma quebra de linha
+        strcat(newLine, "\n");
+
+    response = update(UsuarioRota, newLine, lineLen, user.id);
+    if(response)
+        return 1;
+
+    return 0;
+}
+
+Usuario userById(int id){
+    FILE *data;
+    Usuario user;
+    int position, size;
+    char *linha;
     data = fopen(UsuarioRota, "r");
     if(data == NULL){
-        return 0;
+        user.id = - 1;
+        return user;
     }
     fseek(data, 0, SEEK_END);
     size = ftell(data);
     rewind(data);
-    newLine = new char[sizeof(user) + 29]; //declara um array de caracteres com o tamanho necessario para armezenar a nova linha
-    newLen = sprintf(newLine, "id=%d;nome=%s;password=%s;nasc=%s;desc=%d;renda=%.2f;", user.id, user.nome, user.password, user.nasc, user.desc, user.renda);
-    if(user.id < lastId(UsuarioRota)){ //caso não seja o último do array, realiza uma quebra de linha
-        strcat(newLine, "\n");
-    }
-    newTextFile = new char[size+newLen];
     linha = new char[size];
-    while(!feof(data)){
-        fgets(linha, size * sizeof(char), data);
-        if(linha[0] != '\n'){
-            if(atoi(getId(linha)) != user.id){
-                if(first){
-                    strcpy(newTextFile, linha);
-                    first = 0;
-                }else{
-                    strcat(newTextFile, linha);
-                }
-            }else{
-                strcat(newTextFile, newLine);
-            }
-        }
-    }
-
-    fclose(data);
-
-    data = fopen(UsuarioRota, "w");
-
-    if(data == NULL){
-        fclose(data);
-        delete newLine;
-        delete newTextFile;
+    position = positionById(id, size, UsuarioRota);
+    if(position < 0){
+        user.id = -1;
         delete linha;
-        return 0;
+        return user;
     }
-
-    fputs(newTextFile, data);
-    delete newLine;
-    delete newTextFile;
+    fseek(data, position, SEEK_SET);
+    fgets(linha, size * sizeof(char), data);
+    user = userDataToStruct(linha);
     delete linha;
-    fclose(data);
-    return 1;
+    return user;
 }
 
 Usuarios *listAllUsers(){
@@ -162,18 +146,16 @@ Usuarios *listAllUsers(){
     Usuario user;
     char *linha;
     int size;
-
     data = fopen(UsuarioRota, "r");
     if(data == NULL){
         listUsers = new Usuarios();
         listUsers->next = NULL;
-        return listUsers;
+        return listUsers; //lista vazia
     }
     fseek(data, 0, SEEK_END);
     size = ftell(data);
     rewind(data);
     linha = new char[size];
-
     listUsers = new Usuarios();
     listUsers->next = NULL;
     while(!feof(data)){ //pega cada linha transforma em struct Usuario e adiciona na lista de Usuarios
@@ -192,41 +174,6 @@ Usuarios *listAllUsers(){
             temp->next = nova; //o ponteiro está apontando para a última posição onde será colocado o novo
         }
     }
-
     delete linha;
     return listUsers;
 };
-
-Usuario userById(int id){
-    FILE *data;
-    Usuario user;
-    int position, size;
-    char *linha;
-
-    data = fopen(UsuarioRota, "r");
-
-    if(data == NULL){
-        user.id = - 1;
-        return user;
-    }
-
-    fseek(data, 0, SEEK_END);
-    size = ftell(data);
-    rewind(data);
-    linha = new char[size];
-    position = buscaById(id, size, UsuarioRota);
-
-    if(position < 0){
-        user.id = -1;
-        delete linha;
-        return user;
-    }
-
-    fseek(data, position, SEEK_SET);
-    fgets(linha, size * sizeof(char), data);
-
-    user = userDataToStruct(linha);
-
-    delete linha;
-    return user;
-}

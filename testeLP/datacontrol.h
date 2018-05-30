@@ -55,4 +55,14 @@ struct gastos {
 typedef struct gastos Gastos; //define uma nova estrutura de dado para lista de gastos
 const char GastoRota[] = "Data\\gasto_data.txt";
 
+char *getId(char *linha); //retorna o id da linha
+
+int charToTstmp(char *date); //converte uma data em array de char para "timestamp", criado por mim, com base em uma lógica que da certo
+
+int dataIntCol(char *linha, int inicio, int fim);
+
+void dataCharCol(char *linha, int inicio, int fim, char *campo); //retorna os valores de uma coluna para um certo endereço de char
+
+float dataFloatCol(char *linha, int inicio, int fim);
+
 #endif // DATA_CONTROL_H

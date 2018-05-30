@@ -42,7 +42,10 @@
 
 1526658273 source:c:\users\desktop\documents\cpp\testelp\gasto.cpp
 
-1526190393 source:c:\users\desktop\documents\github\projeto_c\testelp\datacontrol.cpp
+1527522101 source:c:\users\desktop\documents\github\projeto_c\testelp\datacontrol.cpp
+	"string.h"
+	"stdlib.h"
+	"stdio.h"
 
 1527490832 source:c:\users\desktop\documents\github\projeto_c\testelp\user.cpp
 	<iostream>
@@ -52,12 +55,11 @@
 	"datacontrol.h"
 	"filemanager.h"
 
-1527383847 c:\users\desktop\documents\github\projeto_c\testelp\datacontrol.h
+1527521942 c:\users\desktop\documents\github\projeto_c\testelp\datacontrol.h
 
-1527489112 c:\users\desktop\documents\github\projeto_c\testelp\filemanager.h
+1527522644 c:\users\desktop\documents\github\projeto_c\testelp\filemanager.h
 
-1527490727 source:c:\users\desktop\documents\github\projeto_c\testelp\capital.cpp
-	<iostream>
+1527523516 source:c:\users\desktop\documents\github\projeto_c\testelp\capital.cpp
 	"stdlib.h"
 	"stdio.h"
 	"string.h"
@@ -65,11 +67,11 @@
 	"datacontrol.h"
 	"filemanager.h"
 
-1527489106 source:c:\users\desktop\documents\github\projeto_c\testelp\filemanager.cpp
-	<iostream>
-	<string.h>
+1527523478 source:c:\users\desktop\documents\github\projeto_c\testelp\filemanager.cpp
+	"string.h"
 	"stdlib.h"
 	"stdio.h"
+	"datacontrol.h"
 
 1527507988 source:c:\users\desktop\documents\github\projeto_c\testelp\main.cpp
 	<iostream>
