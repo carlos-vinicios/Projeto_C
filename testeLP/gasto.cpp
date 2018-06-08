@@ -11,6 +11,7 @@ void writeData(FILE *data, Gasto gasto){
     fprintf(data, "desc=%s;", gasto.desc);
     fprintf(data, "valor=%.2f;", gasto.valor);
     fprintf(data, "tipo=%d;", gasto.tipo);
+    fprintf(data, "categoria=%d;", gasto.categoria);
     fprintf(data, "user=%d;", gasto.id_user);
 }
 
@@ -36,7 +37,11 @@ Gasto gastoDataToStruct(char *linha){
                 break;
             case 4:
                 gasto.tipo = dataIntCol(linha, index, i);
+                break;
             case 5:
+                gasto.categoria = dataIntCol(linha, index, i);
+                break;
+            case 6:
                 gasto.id_user = dataIntCol(linha, index, i);
                 break;
           }
@@ -64,7 +69,10 @@ int storeGasto(Gasto gasto){
     if(gasto.tipo < 1 || gasto.tipo > 2){
         return 0;
     }
-    if(gasto.id_user > lastId(UsuarioRota)){
+    if(gasto.categoria < 1 || gasto.categoria > lastId(CategoriaRota)){
+        return 0;
+    }
+    if(gasto.id_user < 1 || gasto.id_user > lastId(UsuarioRota)){
         return 0;
     }
     data = fopen(GastoRota, "a+");
@@ -98,11 +106,14 @@ int updateGasto(Gasto gasto){
     if(gasto.tipo < 1 || gasto.tipo > 2){
         return 0;
     }
-    if(gasto.id_user > lastId(UsuarioRota)){
+    if(gasto.categoria < 1 || gasto.categoria > lastId(CategoriaRota)){
+        return 0;
+    }
+    if(gasto.id_user < 1 || gasto.id_user > lastId(UsuarioRota)){
         return 0;
     }
     newLine = new char[sizeof(gasto) + 37]; //declara um array de caracteres com o tamanho necessario para armezenar a nova linha
-    lineLen = sprintf(newLine, "id=%d;data=%s;desc=%s;valor=%.2f;tipo=%d;user=%d;", gasto.id, gasto.data, gasto.desc, gasto.valor, gasto.tipo, gasto.id_user);
+    lineLen = sprintf(newLine, "id=%d;data=%s;desc=%s;valor=%.2f;tipo=%d;categoria=%d;user=%d;", gasto.id, gasto.data, gasto.desc, gasto.valor, gasto.tipo, gasto.categoria, gasto.id_user);
     if(gasto.id < lastId(GastoRota)){ //caso não seja o último do array, realiza uma quebra de linha
         strcat(newLine, "\n");
     }
@@ -189,6 +200,20 @@ Gastos *listAllGastos(){
     delete linha;
     fclose(data);
     return listGastos;
+}
+
+Gastos *listGastosByCategoria(int idCategoria){ //lista os gastos de uma dada categoria
+    Gastos *listGastos, *lista, *before, *after;
+    listGastos = listAllGastos(); //carrega todos os gastos
+    after = listGastos->next; //pega o primeiro elemento da lista
+    for(lista = listGastos->next; lista != NULL; lista = lista->next){ //percorre todas as posições da lista de gasto
+        before = after; //salva o elemento anterior
+        if(lista->gasto.categoria == idCategoria){
+            after = lista->next; //caso a validação seja realizada com sucesso, passa para o próximo elemento da lista
+        }
+        before->next = after->next; //define o próximo elemento da lista
+    }
+    return listGastos; //retorna a lista filtrada
 }
 
 Gastos *filterGastoByMonth(Gastos *listGastos, char *month){ //lista os recebimentos de Gasto com base em uma data

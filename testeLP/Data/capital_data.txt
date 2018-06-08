@@ -1,4 +1,0 @@
-id=2;nome=teste;password=teste;nasc=teste;desc=teste;renda=1000.00;
-id=4;nome=teste;password=teste;nasc=teste;desc=teste;renda=1000.00;
-id=5;nome=teste;password=teste;nasc=tste;desc=ghhggh;renda=3565.00;
-id=6;nome=teste;password=teste;nasc=tste;desc=ghhggh;renda=3565.00;

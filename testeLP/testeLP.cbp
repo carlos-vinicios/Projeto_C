@@ -34,12 +34,16 @@
 		</Compiler>
 		<Unit filename="capital.cpp" />
 		<Unit filename="capital.h" />
+		<Unit filename="categoria.cpp" />
+		<Unit filename="categoria.h" />
 		<Unit filename="datacontrol.cpp" />
 		<Unit filename="datacontrol.h" />
 		<Unit filename="filemanager.cpp" />
 		<Unit filename="filemanager.h" />
 		<Unit filename="gasto.cpp" />
 		<Unit filename="gasto.h" />
+		<Unit filename="investimento.cpp" />
+		<Unit filename="investimento.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="user.cpp" />
 		<Unit filename="user.h" />

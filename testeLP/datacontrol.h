@@ -4,12 +4,13 @@
 #define MAX_NOME 60
 #define MAX_DESC 200
 #define MAX_PASS 20
+#define MAX_DATA 11
 
 struct Usuario{
     int id;
     char nome[MAX_NOME];
     char password[MAX_PASS];
-    char nasc[10];
+    char nasc[MAX_DATA];
     char desc[MAX_DESC];
     float renda;
 };
@@ -24,7 +25,7 @@ const char UsuarioRota[] = "Data\\user_data.txt";
 
 struct Capital {
     int id;
-    char data[11];
+    char data[MAX_DATA];
     char desc[MAX_DESC];
     float valor;
     int id_user;
@@ -40,11 +41,12 @@ const char CapitalRota[] = "Data\\capital_data.txt";
 
 struct Gasto {
     int id;
-    char data[11];
+    char data[MAX_DATA];
     char desc[MAX_DESC];
     float valor;
-    int tipo;
-    int id_user;
+    int tipo; // mensal ou rotativo
+    int categoria; //categoria do gasto
+    int id_user; //id do usuario que cadastrou
 };
 
 struct gastos {
@@ -54,6 +56,37 @@ struct gastos {
 
 typedef struct gastos Gastos; //define uma nova estrutura de dado para lista de gastos
 const char GastoRota[] = "Data\\gasto_data.txt";
+
+struct Categoria {
+    int id;
+    char nome[MAX_NOME];
+    Gastos *allGastos;
+    float total;
+};
+
+struct categorias {
+    Categoria categoria;
+    struct categorias *next;
+};
+
+typedef struct categorias Categorias;
+const char CategoriaRota[] = "Data\\categoria_data.txt";
+
+struct Investimento { //melhora com o tempo essa estrutura de dados para uma melhor experiência do usuario
+    int id;
+    char data[MAX_DATA];
+    char local[MAX_DESC];
+    float valor;
+    int id_user;
+};
+
+struct investimentos {
+    Investimento investimento;
+    struct investimentos *next;
+};
+
+typedef struct investimentos Investimentos;
+const char InvestimentoRota[] = "Data\\investimento_data.txt";
 
 char *getId(char *linha); //retorna o id da linha
 

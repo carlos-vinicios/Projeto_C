@@ -1,11 +1,8 @@
-#include <iostream>
 #include "string.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "datacontrol.h"
 #include "filemanager.h"
-
-using namespace std;
 
 void writeData(FILE *data, Usuario user){
     fprintf(data, "id=%d;", user.id);

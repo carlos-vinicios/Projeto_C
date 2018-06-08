@@ -11,6 +11,8 @@ Gasto gastoById(int id); //carrega as informações (gastos) para exibição ou ediç
 
 Gastos *listAllGastos(); //lista todos os gastos
 
+Gastos *listGastosByCategoria(int idCategoria); //retorna todos os gastos de uma dada categoria
+
 Gastos *filterGastoByMonth(Gastos *listGastos, char *date); //lista os gastos com base em uma data
 
 Gastos *filterGastoBetweenDate(Gastos *listGastos, char *initDate, char *endDate); //lista os gastos com base em dois meses dados
