@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>createUser</class>
+ <widget class="QWidget" name="createUser">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>426</width>
+    <height>370</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Segoe UI</family>
+    <pointsize>11</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Novo usuário</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>2</number>
+   </property>
+   <property name="leftMargin">
+    <number>10</number>
+   </property>
+   <property name="topMargin">
+    <number>10</number>
+   </property>
+   <property name="rightMargin">
+    <number>10</number>
+   </property>
+   <property name="bottomMargin">
+    <number>10</number>
+   </property>
+   <item alignment="Qt::AlignHCenter">
+    <widget class="QLabel" name="title">
+     <property name="text">
+      <string>Bem vindo ao Vida Financeira</string>
+     </property>
+    </widget>
+   </item>
+   <item alignment="Qt::AlignHCenter">
+    <widget class="QLabel" name="sub_title">
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Realize o cadastro abaixo para utilizar o nosso programa</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="3" column="0">
+      <widget class="QDateEdit" name="nascInput">
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" alignment="Qt::AlignLeft">
+      <widget class="QLabel" name="labelNome">
+       <property name="text">
+        <string>Nome:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="2">
+      <widget class="QLineEdit" name="nomeInput"/>
+     </item>
+     <item row="2" column="0" alignment="Qt::AlignLeft">
+      <widget class="QLabel" name="labelNasc">
+       <property name="text">
+        <string>Data de nascimento:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0" colspan="2" alignment="Qt::AlignLeft">
+      <widget class="QLineEdit" name="rendaInput">
+       <property name="placeholderText">
+        <string>2000.00</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0" alignment="Qt::AlignLeft">
+      <widget class="QLabel" name="labelDesc">
+       <property name="text">
+        <string>Descrição:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0" colspan="2">
+      <widget class="QTextEdit" name="descInput"/>
+     </item>
+     <item row="8" column="0" colspan="2" alignment="Qt::AlignHCenter">
+      <widget class="QPushButton" name="saveButton">
+       <property name="text">
+        <string>Cadastrar</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0" alignment="Qt::AlignLeft">
+      <widget class="QLabel" name="labelRenda">
+       <property name="text">
+        <string>Renda</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>nomeInput</tabstop>
+  <tabstop>nascInput</tabstop>
+  <tabstop>rendaInput</tabstop>
+  <tabstop>descInput</tabstop>
+  <tabstop>saveButton</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

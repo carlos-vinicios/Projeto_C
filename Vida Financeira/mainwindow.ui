@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>757</width>
+    <height>354</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Segoe UI</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
+  <property name="mouseTracking">
+   <bool>false</bool>
+  </property>
+  <property name="acceptDrops">
+   <bool>false</bool>
+  </property>
+  <property name="windowTitle">
+   <string>Vida Financeira</string>
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::LeftToRight</enum>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item alignment="Qt::AlignRight|Qt::AlignTop">
+     <widget class="QPushButton" name="perfilButton">
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string>Perfil</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tabGasto">
+       <attribute name="title">
+        <string>Gastos</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <layout class="QGridLayout" name="layoutGastos">
+          <item row="1" column="0" colspan="2">
+           <widget class="QTableView" name="tableGastos"/>
+          </item>
+          <item row="0" column="1" alignment="Qt::AlignRight">
+           <widget class="QPushButton" name="addGastoButton">
+            <property name="text">
+             <string>Adicionar</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabInvestimentos">
+       <attribute name="title">
+        <string>Investimentos</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <layout class="QGridLayout" name="layoutInvestimentos">
+          <item row="1" column="0" colspan="2">
+           <widget class="QTableView" name="tableInvestimentos"/>
+          </item>
+          <item row="0" column="1" alignment="Qt::AlignRight">
+           <widget class="QPushButton" name="addInvestimentos">
+            <property name="text">
+             <string>Adicionar</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabCapitais">
+       <attribute name="title">
+        <string>Capitais</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <layout class="QGridLayout" name="layoutCapitais">
+          <item row="1" column="0" colspan="2">
+           <widget class="QTableView" name="tableCapitais"/>
+          </item>
+          <item row="0" column="1" alignment="Qt::AlignRight">
+           <widget class="QPushButton" name="addCapitais">
+            <property name="text">
+             <string>Adicionar</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
