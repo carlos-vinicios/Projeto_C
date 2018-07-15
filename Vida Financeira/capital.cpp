@@ -9,8 +9,7 @@ void writeData(FILE *data, Capital capital){
     fprintf(data, "id=%d;", capital.id);
     fprintf(data, "data=%s;", capital.data);
     fprintf(data, "desc=%s;", capital.desc);
-    fprintf(data, "valor=%.2f;", capital.valor);
-    fprintf(data, "user=%d;", capital.id_user);
+    fprintf(data, "valor=%.2f;\n", capital.valor);
 }
 
 Capital capitalDataToStruct(char *linha){
@@ -25,16 +24,15 @@ Capital capitalDataToStruct(char *linha){
           index++; //garante que vá para o primeiro elemento do dado
           switch (exec) {
             case 1:
-              dataCharCol(linha, index, i, capital.data);
-              break;
+                capital.data = new char[i - index];
+                dataCharCol(linha, index, i, capital.data);
+                break;
             case 2:
+                capital.desc = new char[i - index];
                 dataCharCol(linha, index, i, capital.desc);
                 break;
             case 3: //pegando o valor
-              capital.valor = dataFloatCol(linha, index, i);
-              break;
-            case 4:
-                capital.id_user = dataIntCol(linha, index, i);
+                capital.valor = dataFloatCol(linha, index, i);
                 break;
           }
           exec++;
@@ -50,25 +48,19 @@ int storeCapital(Capital capital){
         return 0;
     }
     if(!(strlen(capital.desc) > 0)){
-        return 0;
-    }
-    if(!(strlen(capital.data) > 0)){
-        return 0;
+        return 2;
     }
     if(capital.valor <= 0){
-        return 0;
+        return 3;
     }
-    if(capital.id_user > lastId(UsuarioRota)){
-        return 0;
-    }
+//    if(capital.id_user > lastId(UsuarioRota)){
+//        return 0;
+//    }
     data = fopen(CapitalRota, "a+");
     if(data == NULL){
-        return 0;
+        return 4;
     }
     capital.id = lastId(CapitalRota) + 1;
-    if(capital.id != 1){
-        fputc('\n', data);
-    }
     writeData(data, capital);
     fclose(data);
     return 1;
@@ -81,27 +73,21 @@ int updateCapital(Capital capital){
         return 0;
     }
     if(!(strlen(capital.desc) > 0)){
-        return 0;
-    }
-    if(!(strlen(capital.data) > 0)){
-        return 0;
+        return 2;
     }
     if(capital.valor <= 0){
-        return 0;
+        return 3;
     }
-    if(capital.id_user > lastId(UsuarioRota)){
-        return 0;
-    }
+//    if(capital.id_user > lastId(UsuarioRota)){
+//        return 0;
+//    }
     newLine = new char[sizeof(capital) + 32]; //declara um array de caracteres com o tamanho necessario para armezenar a nova linha
-    lineLen = sprintf(newLine, "id=%d;data=%s;desc=%s;valor=%.2f;user=%d;", capital.id, capital.data, capital.desc, capital.valor, capital.id_user);
-    if(capital.id < lastId(CapitalRota)) //caso não seja o último do array, realiza uma quebra de linha
-        strcat(newLine, "\n");
-
+    lineLen = sprintf(newLine, "id=%d;data=%s;desc=%s;valor=%.2f;\n", capital.id, capital.data, capital.desc, capital.valor);
     response = update(CapitalRota, newLine, lineLen, capital.id);
     if(response)
         return 1;
 
-    return 0;
+    return 4;
 }
 
 int deleteCapital(int id){ //exclui o capital recebido
@@ -160,8 +146,7 @@ Capitais *listAllCapitais(){
     linha = new char[size];
     listCapitais = new Capitais();
     listCapitais->next = NULL;
-    while(!feof(data)){ //pega cada linha transforma em struct Usuario e adiciona na lista de Usuarios
-        fgets(linha, size, data);
+    while(fgets(linha, size, data) != NULL){ //pega cada linha transforma em struct Capital e adiciona na lista de Capitais
         capital = capitalDataToStruct(linha);
         nova = new Capitais();
         nova->capital = capital;
@@ -182,16 +167,28 @@ Capitais *listAllCapitais(){
 }
 
 Capitais *filterCapitalByMonth(Capitais *listCapitais, char *month){ //lista os recebimentos de capital com base em uma data
-    Capitais *lista, *before, *after;
-    after = listCapitais->next;
+    Capitais *lista, *nova, *old, *filtered;
+
+    filtered = new Capitais();
+    filtered->next = NULL;
     for(lista = listCapitais->next; lista != NULL; lista = lista->next){
-        before = after;
-        if(strstr(lista->capital.data, month) == NULL){
-            after = lista->next;
+        if(strstr(lista->capital.data, month) != NULL){
+            nova = new Capitais();
+            nova->capital = lista->capital;
+            nova->next = NULL;
+            if(filtered->next == NULL){
+                filtered->next = nova;
+            }else{
+                old = filtered->next;
+                while(old->next != NULL)
+                    old = old->next; //passa para o pr?ximo ponteiro dentro da lista
+
+                old->next = nova;
+            }
         }
-        before->next = after->next;
     }
-    return listCapitais;
+
+    return filtered;
 }
 
 Capitais *filterCapitalBetweenDate(Capitais *listCapitais, char *initDate, char *endDate){

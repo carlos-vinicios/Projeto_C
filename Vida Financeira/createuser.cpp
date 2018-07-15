@@ -1,7 +1,6 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QProcess>
-#include <QApplication>
 #include "createuser.h"
 #include "ui_createuser.h"
 #include "datacontrol.h"
@@ -69,7 +68,6 @@ void createUser::on_saveButton_clicked()
             msgBox.exec();
             break;
     }
-    close();
     qApp->quit();
     QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
 }

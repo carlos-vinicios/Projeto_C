@@ -34,7 +34,10 @@ SOURCES += \
     investimento.cpp \
     user.cpp \
     creategastos.cpp \
-    createuser.cpp
+    createuser.cpp \
+    createcatgasto.cpp \
+    createcapital.cpp \
+    createinvestimento.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -46,9 +49,15 @@ HEADERS += \
     investimento.h \
     user.h \
     creategastos.h \
-    createuser.h
+    createuser.h \
+    createcatgasto.h \
+    createcapital.h \
+    createinvestimento.h
 
 FORMS += \
         mainwindow.ui \
     creategastos.ui \
-    createuser.ui
+    createuser.ui \
+    createcatgasto.ui \
+    createcapital.ui \
+    createinvestimento.ui

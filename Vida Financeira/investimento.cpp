@@ -9,8 +9,7 @@ void writeData(FILE *data, Investimento investimento){
     fprintf(data, "id=%d;", investimento.id);
     fprintf(data, "data=%s;", investimento.data);
     fprintf(data, "local=%s;", investimento.local);
-    fprintf(data, "valor=%.2f;", investimento.valor);
-    fprintf(data, "user=%d;", investimento.id_user);
+    fprintf(data, "valor=%.2f;\n", investimento.valor);
 }
 
 Investimento investimentoDataToStruct(char *linha){
@@ -25,17 +24,19 @@ Investimento investimentoDataToStruct(char *linha){
           index++; //garante que vá para o primeiro elemento do dado
           switch (exec) {
             case 1:
-              dataCharCol(linha, index, i, investimento.data);
-              break;
+                investimento.data = new char[i - index];
+                dataCharCol(linha, index, i, investimento.data);
+                break;
             case 2:
+                investimento.local = new char[i - index];
                 dataCharCol(linha, index, i, investimento.local);
                 break;
             case 3: //pegando o valor
-              investimento.valor = dataFloatCol(linha, index, i);
-              break;
-            case 4:
-                investimento.id_user = dataIntCol(linha, index, i);
+                investimento.valor = dataFloatCol(linha, index, i);
                 break;
+//            case 4:
+//                investimento.id_user = dataIntCol(linha, index, i);
+//                break;
           }
           exec++;
         }
@@ -50,25 +51,19 @@ int storeInvestimento(Investimento investimento){
         return 0;
     }
     if(!(strlen(investimento.local) > 0)){
-        return 0;
-    }
-    if(!(strlen(investimento.data) > 0)){
-        return 0;
+        return 2;
     }
     if(investimento.valor <= 0){
-        return 0;
+        return 3;
     }
-    if(investimento.id_user > lastId(UsuarioRota)){
-        return 0;
-    }
+//    if(investimento.id_user > lastId(UsuarioRota)){
+//        return 0;
+//    }
     data = fopen(InvestimentoRota, "a+");
     if(data == NULL){
-        return 0;
+        return 4;
     }
     investimento.id = lastId(InvestimentoRota) + 1;
-    if(investimento.id != 1){
-        fputc('\n', data);
-    }
     writeData(data, investimento);
     fclose(data);
     return 1;
@@ -81,27 +76,21 @@ int updateInvestimento(Investimento investimento){
         return 0;
     }
     if(!(strlen(investimento.local) > 0)){
-        return 0;
-    }
-    if(!(strlen(investimento.data) > 0)){
-        return 0;
+        return 2;
     }
     if(investimento.valor <= 0){
-        return 0;
+        return 3;
     }
-    if(investimento.id_user > lastId(UsuarioRota)){
-        return 0;
-    }
+//    if(investimento.id_user > lastId(UsuarioRota)){
+//        return 0;
+//    }
     newLine = new char[sizeof(investimento) + 32]; //declara um array de caracteres com o tamanho necessario para armezenar a nova linha
-    lineLen = sprintf(newLine, "id=%d;data=%s;local=%s;valor=%.2f;user=%d;", investimento.id, investimento.data, investimento.local, investimento.valor, investimento.id_user);
-    if(investimento.id < lastId(InvestimentoRota)) //caso não seja o último do array, realiza uma quebra de linha
-        strcat(newLine, "\n");
-
+    lineLen = sprintf(newLine, "id=%d;data=%s;local=%s;valor=%.2f;\n", investimento.id, investimento.data, investimento.local, investimento.valor);
     response = update(InvestimentoRota, newLine, lineLen, investimento.id);
     if(response)
         return 1;
 
-    return 0;
+    return 4;
 }
 
 int deleteInvestimento(int id){ //exclui o Investimento recebido
@@ -160,8 +149,7 @@ Investimentos *listAllInvestimentos(){
     linha = new char[size];
     listInvestimentos = new Investimentos();
     listInvestimentos->next = NULL;
-    while(!feof(data)){ //pega cada linha transforma em struct Usuario e adiciona na lista de Usuarios
-        fgets(linha, size, data);
+    while(fgets(linha, size, data) != NULL){ //pega cada linha transforma em struct Investimento e adiciona a lista
         investimento = investimentoDataToStruct(linha);
         nova = new Investimentos();
         nova->investimento = investimento;
@@ -176,22 +164,34 @@ Investimentos *listAllInvestimentos(){
             temp->next = nova; //o ponteiro está apontando para a última posição onde será colocado o novo
         }
     }
-    delete linha;
+    delete[] linha;
     fclose(data);
     return listInvestimentos;
 }
 
 Investimentos *filterInvestimentoByMonth(Investimentos *listInvestimentos, char *month){ //lista os recebimentos de Investimento com base em uma data
-    Investimentos *lista, *before, *after;
-    after = listInvestimentos->next;
+    Investimentos *lista, *nova, *old, *filtered;
+
+    filtered = new Investimentos();
+    filtered->next = NULL;
     for(lista = listInvestimentos->next; lista != NULL; lista = lista->next){
-        before = after;
-        if(strstr(lista->investimento.data, month) == NULL){
-            after = lista->next;
+        if(strstr(lista->investimento.data, month) != NULL){
+            nova = new Investimentos();
+            nova->investimento = lista->investimento;
+            nova->next = NULL;
+            if(filtered->next == NULL){
+                filtered->next = nova;
+            }else{
+                old = filtered->next;
+                while(old->next != NULL)
+                    old = old->next; //passa para o pr?ximo ponteiro dentro da lista
+
+                old->next = nova;
+            }
         }
-        before->next = after->next;
     }
-    return listInvestimentos;
+
+    return filtered;
 }
 
 Investimentos *filterInvestimentoBetweenDate(Investimentos *listInvestimentos, char *initDate, char *endDate){

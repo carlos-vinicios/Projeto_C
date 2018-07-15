@@ -42,15 +42,48 @@
     <bool>true</bool>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
-    <item alignment="Qt::AlignRight|Qt::AlignTop">
-     <widget class="QPushButton" name="perfilButton">
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
+    <item>
+     <layout class="QGridLayout" name="userInfosGrid" rowminimumheight="0">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetFixedSize</enum>
       </property>
-      <property name="text">
-       <string>Perfil</string>
+     </layout>
+    </item>
+    <item>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <property name="topMargin">
+       <number>20</number>
       </property>
-     </widget>
+      <property name="bottomMargin">
+       <number>20</number>
+      </property>
+      <item row="0" column="1" alignment="Qt::AlignHCenter">
+       <widget class="QLabel" name="labelMes">
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" alignment="Qt::AlignRight">
+       <widget class="QPushButton" name="mesAnterior">
+        <property name="text">
+         <string>Anterior</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2" alignment="Qt::AlignLeft">
+       <widget class="QPushButton" name="mesSeguin">
+        <property name="text">
+         <string>Seguinte</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
      <widget class="QTabWidget" name="tabWidget">
@@ -64,15 +97,19 @@
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <layout class="QGridLayout" name="layoutGastos">
-          <item row="1" column="0" colspan="2">
-           <widget class="QTableView" name="tableGastos"/>
+          <item row="2" column="0">
+           <layout class="QGridLayout" name="gridLayoutGasto"/>
           </item>
-          <item row="0" column="1" alignment="Qt::AlignRight">
-           <widget class="QPushButton" name="addGastoButton">
-            <property name="text">
-             <string>Adicionar</string>
-            </property>
-           </widget>
+          <item row="1" column="0">
+           <layout class="QGridLayout" name="gridLayoutControlButtons">
+            <item row="0" column="3" alignment="Qt::AlignRight">
+             <widget class="QPushButton" name="addGastoButton">
+              <property name="text">
+               <string>Adicionar</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>
@@ -85,10 +122,7 @@
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
          <layout class="QGridLayout" name="layoutInvestimentos">
-          <item row="1" column="0" colspan="2">
-           <widget class="QTableView" name="tableInvestimentos"/>
-          </item>
-          <item row="0" column="1" alignment="Qt::AlignRight">
+          <item row="0" column="0" alignment="Qt::AlignRight">
            <widget class="QPushButton" name="addInvestimentos">
             <property name="text">
              <string>Adicionar</string>
@@ -106,10 +140,7 @@
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
          <layout class="QGridLayout" name="layoutCapitais">
-          <item row="1" column="0" colspan="2">
-           <widget class="QTableView" name="tableCapitais"/>
-          </item>
-          <item row="0" column="1" alignment="Qt::AlignRight">
+          <item row="0" column="0" alignment="Qt::AlignRight">
            <widget class="QPushButton" name="addCapitais">
             <property name="text">
              <string>Adicionar</string>

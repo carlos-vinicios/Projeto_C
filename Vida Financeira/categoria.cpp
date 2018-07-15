@@ -8,14 +8,12 @@
 
 void writeData(FILE *data, Categoria categoria){
     fprintf(data, "id=%d;", categoria.id);
-    fprintf(data, "nome=%s;", categoria.nome);
+    fprintf(data, "nome=%s;\n", categoria.nome);
 }
 
 Categoria categoriaDataToStruct(char *linha){
     Categoria categoria;
-    Gastos *tmp;
     int i, index, exec = 0;
-    float valor = 0;
     for (i = 0; i < strlen(linha); i++) {
         if(linha[i] == ';'){//procurando pelos campos
           index = i - 1;
@@ -25,6 +23,7 @@ Categoria categoriaDataToStruct(char *linha){
           index++; //garante que vá para o primeiro elemento do dado
           switch (exec) {
             case 1:
+              categoria.nome = new char[i - index];
               dataCharCol(linha, index, i, categoria.nome);
               break;
           }
@@ -32,28 +31,19 @@ Categoria categoriaDataToStruct(char *linha){
         }
     }
     categoria.id = atoi(getId(linha));
-    categoria.allGastos = listGastosByCategoria(categoria.id);
-	tmp = categoria.allGastos->next;
-	while( tmp != NULL){
-        valor += tmp->gasto.valor;
-	}
-	categoria.total = valor;
     return categoria;
 }
 
 int storeCategoria(Categoria categoria){
     FILE *data;
-    if(!(strlen(categoria.nome) > 0)){
+    if(!(strlen(categoria.nome) > 0))
         return 0;
-    }
+
     data = fopen(CategoriaRota, "a+");
-    if(data == NULL){
-        return 0;
-    }
+    if(data == NULL)
+        return 2;
+
     categoria.id = lastId(CategoriaRota) + 1;
-    if(categoria.id != 1){
-        fputc('\n', data);
-    }
     writeData(data, categoria);
     fclose(data);
     return 1;
@@ -62,19 +52,17 @@ int storeCategoria(Categoria categoria){
 int updateCategoria(Categoria categoria){
     char *newLine;
     int lineLen, response;
-    if(!(strlen(categoria.nome) > 0)){
+    if(!(strlen(categoria.nome) > 0))
         return 0;
-    }
+
     newLine = new char[sizeof(categoria) + 32]; //declara um array de caracteres com o tamanho necessario para armezenar a nova linha
-    lineLen = sprintf(newLine, "id=%d;nome=%s;", categoria.id, categoria.nome);
-    if(categoria.id < lastId(CategoriaRota)) //caso não seja o último do array, realiza uma quebra de linha
-        strcat(newLine, "\n");
+    lineLen = sprintf(newLine, "id=%d;nome=%s;\n", categoria.id, categoria.nome);
 
     response = update(CategoriaRota, newLine, lineLen, categoria.id);
     if(response)
         return 1;
 
-    return 0;
+    return 4;
 }
 
 int deleteCategoria(int id){ //exclui a Categoria recebido
@@ -133,8 +121,7 @@ Categorias *listAllCategorias(){
     linha = new char[size];
     listCategorias = new Categorias();
     listCategorias->next = NULL;
-    while(!feof(data)){ //pega cada linha transforma em struct Usuario e adiciona na lista de Usuarios
-        fgets(linha, size, data);
+    while(fgets(linha, size, data) != NULL){ //pega cada linha transforma em struct Usuario e adiciona na lista de Usuarios
         categoria = categoriaDataToStruct(linha);
         nova = new Categorias();
         nova->categoria = categoria;
@@ -153,4 +140,3 @@ Categorias *listAllCategorias(){
     fclose(data);
     return listCategorias;
 }
-

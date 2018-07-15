@@ -23,12 +23,14 @@ Gasto gastoDataToStruct(char *linha){
           do{
             index--;
           }while(linha[index] != '='); //volta o contador para o primeiro =, significando o inicio do dado
-          index++; //garante que vá para o primeiro elemento do dado
+          index++; //garante que v? para o primeiro elemento do dado
           switch (exec) {
             case 1:
+                gasto.data = new char[i - index];
                 dataCharCol(linha, index, i, gasto.data);
                 break;
             case 2:
+                gasto.desc = new char[i - index];
                 dataCharCol(linha, index, i, gasto.desc);
                 break;
             case 3: //pegando o valor
@@ -56,22 +58,19 @@ int storeGasto(Gasto gasto){
     if(!(strlen(gasto.desc) > 0)){
         return 2;
     }
-    if(!(strlen(gasto.data) > 0)){
+    if(gasto.valor <= 0){
         return 3;
     }
-    if(gasto.valor <= 0){
+    if(gasto.tipo < 1 || gasto.tipo > 2){
         return 4;
     }
-    if(gasto.tipo < 1 || gasto.tipo > 2){
-        return 5;
-    }
     if(gasto.categoria < 1 || gasto.categoria > lastId(CategoriaRota)){
-        return 6;
+        return 5;
     }
     gasto.id = lastId(GastoRota) + 1;
     data = fopen(GastoRota, "a+");
     if(data == NULL){
-        return 7;
+        return 6;
     }
     writeData(data, gasto);
     fclose(data);
@@ -143,7 +142,7 @@ Gasto gastoById(int id){
     fseek(data, position, SEEK_SET);
     fgets(linha, size, data);
     gasto = gastoDataToStruct(linha);
-    delete linha;
+    delete[] linha;
     fclose(data);
     return gasto;
 }
@@ -172,46 +171,84 @@ Gastos *listAllGastos(){
         nova = new Gastos();
         nova->gasto = gasto;
         nova->next = NULL;
-        if(listGastos->next == NULL){ //se a lista tiver vázia só adiciona o item
+        if(listGastos->next == NULL){ //se a lista tiver v?zia s? adiciona o item
             listGastos->next = nova;
-        }else{ //caso contrario, recebe o valor do prox item, percorre toda a lista até encontrar o último
+        }else{ //caso contrario, recebe o valor do prox item, percorre toda a lista at? encontrar o ?ltimo
             temp = listGastos->next;
             while(temp->next != NULL)
-                temp = temp->next; //passa para o próximo ponteiro dentro da lista
+                temp = temp->next; //passa para o pr?ximo ponteiro dentro da lista
 
-            temp->next = nova; //o ponteiro está apontando para a última posição onde será colocado o novo
+            temp->next = nova; //o ponteiro est? apontando para a ?ltima posi??o onde ser? colocado o novo
         }
     }
-    delete linha;
+    delete[] linha;
     fclose(data);
     return listGastos;
 }
 
 Gastos *listGastosByCategoria(int idCategoria){ //lista os gastos de uma dada categoria
-    Gastos *listGastos, *lista, *before, *after;
-    listGastos = listAllGastos(); //carrega todos os gastos
-    after = listGastos->next; //pega o primeiro elemento da lista
-    for(lista = listGastos->next; lista != NULL; lista = lista->next){ //percorre todas as posições da lista de gasto
-        before = after; //salva o elemento anterior
-        if(lista->gasto.categoria == idCategoria){
-            after = lista->next; //caso a validação seja realizada com sucesso, passa para o próximo elemento da lista
-        }
-        before->next = after->next; //define o próximo elemento da lista
+    FILE *data;
+    Gastos *listGastos, *nova, *temp;
+    Gasto gasto;
+    char *linha;
+    int size;
+    data = fopen(GastoRota, "r");
+    if(data == NULL){
+        listGastos = new Gastos();
+        listGastos->next = NULL;
+        return listGastos;
     }
-    return listGastos; //retorna a lista filtrada
+    fseek(data, 0, SEEK_END);
+    size = ftell(data);
+    rewind(data);
+    linha = new char[size];
+    listGastos = new Gastos();
+    listGastos->next = NULL;
+    while(fgets(linha, size, data) != NULL){ //pega cada linha transforma em struct Usuario e adiciona na lista de Usuarios
+        gasto = gastoDataToStruct(linha);
+        if(gasto.categoria == idCategoria){
+            nova = new Gastos();
+            nova->gasto = gasto;
+            nova->next = NULL;
+            if(listGastos->next == NULL){ //se a lista tiver v?zia s? adiciona o item
+                listGastos->next = nova;
+            }else{ //caso contrario, recebe o valor do prox item, percorre toda a lista at? encontrar o ?ltimo
+                temp = listGastos->next;
+                while(temp->next != NULL)
+                    temp = temp->next; //passa para o pr?ximo ponteiro dentro da lista
+
+                temp->next = nova; //o ponteiro est? apontando para a ?ltima posi??o onde ser? colocado o novo
+            }
+        }
+    }
+    delete[] linha;
+    fclose(data);
+    return listGastos;
 }
 
-Gastos *filterGastoByMonth(Gastos *listGastos, char *month){ //lista os recebimentos de Gasto com base em uma data
-    Gastos *lista, *before, *after;
-    after = listGastos->next;
+Gastos *filterGastoByMonth(Gastos *listGastos, char *month){ //lista os gastos com base em um mÃªs dado
+    Gastos *lista, *nova, *old, *filtered;
+
+    filtered = new Gastos();
+    filtered->next = NULL;
     for(lista = listGastos->next; lista != NULL; lista = lista->next){
-        before = after;
-        if(strstr(lista->gasto.data, month) == NULL){
-            after = lista->next;
+        if(strstr(lista->gasto.data, month) != NULL){
+            nova = new Gastos();
+            nova->gasto = lista->gasto;
+            nova->next = NULL;
+            if(filtered->next == NULL){
+                filtered->next = nova;
+            }else{
+                old = filtered->next;
+                while(old->next != NULL)
+                    old = old->next; //passa para o pr?ximo ponteiro dentro da lista
+
+                old->next = nova;
+            }
         }
-        before->next = after->next;
     }
-    return listGastos;
+
+    return filtered;
 }
 
 Gastos *filterGastoBetweenDate(Gastos *listGastos, char *initDate, char *endDate){
@@ -234,7 +271,7 @@ Gastos *filterGastoBetweenDate(Gastos *listGastos, char *initDate, char *endDate
             }else{
                 old = filtered->next;
                 while(old->next != NULL)
-                    old = old->next; //passa para o próximo ponteiro dentro da lista
+                    old = old->next; //passa para o pr?ximo ponteiro dentro da lista
 
                 old->next = nova;
             }
@@ -245,7 +282,7 @@ Gastos *filterGastoBetweenDate(Gastos *listGastos, char *initDate, char *endDate
 
 Gastos *filterGastoBetweenValue(Gastos *listGastos, float init_valor, float end_valor){ //lista os recebimentos de Gasto com base em um valor
     Gastos *lista, *filtered, *nova, *old;
-    if(end_valor == 0 || end_valor == NULL){ //verifica se o valor final foi passado, caso não, seleciona o maior valor da lista para o valor final
+    if(end_valor == 0 || end_valor == NULL){ //verifica se o valor final foi passado, caso n?o, seleciona o maior valor da lista para o valor final
         end_valor = 0;
         for(lista = listGastos; lista != NULL; lista = lista->next){
             if(lista->gasto.valor > end_valor){
@@ -253,7 +290,7 @@ Gastos *filterGastoBetweenValue(Gastos *listGastos, float init_valor, float end_
             }
         }
     }
-    if(end_valor < init_valor){ //se o valor for menor que o passado, retorna nulo, pois não tem como fazer a filtração
+    if(end_valor < init_valor){ //se o valor for menor que o passado, retorna nulo, pois n?o tem como fazer a filtra??o
         return NULL;
     }
     filtered = new Gastos();
@@ -268,7 +305,7 @@ Gastos *filterGastoBetweenValue(Gastos *listGastos, float init_valor, float end_
             }else{
                 old = filtered->next;
                 while(old->next != NULL)
-                    old = old->next; //passa para o próximo ponteiro dentro da lista
+                    old = old->next; //passa para o pr?ximo ponteiro dentro da lista
 
                 old->next = nova;
             }
