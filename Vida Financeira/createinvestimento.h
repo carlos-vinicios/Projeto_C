@@ -1,13 +1,13 @@
 #ifndef CREATEINVESTIMENTO_H
 #define CREATEINVESTIMENTO_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class CreateInvestimento;
 }
 
-class CreateInvestimento : public QWidget
+class CreateInvestimento : public QDialog
 {
     Q_OBJECT
 
@@ -22,7 +22,6 @@ private slots:
 
 private:
     Ui::CreateInvestimento *ui;
-
 };
 
 #endif // CREATEINVESTIMENTO_H

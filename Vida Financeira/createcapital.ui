@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>CreateCapital</class>
- <widget class="QWidget" name="CreateCapital">
+ <widget class="QDialog" name="CreateCapital">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>374</width>
-    <height>349</height>
+    <width>352</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>374</width>
-    <height>349</height>
+    <width>352</width>
+    <height>300</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>374</width>
-    <height>349</height>
+    <width>352</width>
+    <height>300</height>
    </size>
   </property>
   <property name="font">
@@ -30,6 +30,40 @@
   </property>
   <property name="windowTitle">
    <string>Recebimento de Capital</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="icons.qrc">
+    <normaloff>:/Downloads/main_icon.png</normaloff>:/Downloads/main_icon.png</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog{
+	background-image: url(:/Downloads/background2.jpg);
+}
+QLabel{
+	color:#FF692E;
+	font: 12pt &quot;Segoe UI&quot;;
+}
+QPushButton{
+	background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #ff9b58, stop: 0.4 #ff7037,
+                                stop: 0.5 #ff7037, stop: 1.0 #ff9b58);
+	border:none;
+	padding: 10px;
+	color:#FFF;
+	margin-top: 10px;
+}
+QLineEdit{
+	border:none;
+	background-color:  transparent;
+	padding:5px;
+	border-bottom: 1px solid #000;
+}
+QDateEdit{
+	padding:5px;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -65,6 +99,9 @@
       <widget class="QPushButton" name="cancelButton">
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
        </property>
        <property name="text">
         <string>Cancelar</string>
@@ -106,6 +143,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

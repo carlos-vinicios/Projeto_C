@@ -44,6 +44,8 @@ private slots:
 
     void startCapital();
 
+    void startEstatisticas();
+
     void on_mesAnterior_clicked();
 
     void on_mesSeguin_clicked();
@@ -61,6 +63,7 @@ private:
     QTableWidget *tableCapital;
     QLabel *userInvestido;
     QLabel *userGastoMes;
+    QString headerTextStyle = "color:rgb(255, 105, 46); font-size:18px; font: large 'Segoe UI';";
     int mes, ano;
 };
 

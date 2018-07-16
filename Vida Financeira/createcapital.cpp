@@ -8,7 +8,7 @@
 MainWindow *mainView2;
 
 CreateCapital::CreateCapital(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::CreateCapital)
 {
     ui->setupUi(this);

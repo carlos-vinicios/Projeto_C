@@ -1,19 +1,19 @@
 #ifndef GASTO_H
 #define GASTO_H
 
-int storeGasto(Gasto gasto); //salvar as informações de um novo gasto
+int storeGasto(Gasto gasto); //salvar as informa??es de um novo gasto
 
-int updateGasto(Gasto gasto); //alteração de informações de um gasto
+int updateGasto(Gasto gasto); //altera??o de informa??es de um gasto
 
 int deleteGasto(int id); //exclui o gasto
 
-Gasto gastoById(int id); //carrega as informações (gastos) para exibição ou edição
+Gasto gastoById(int id); //carrega as informa??es (gastos) para exibi??o ou edi??o
 
 Gastos *listAllGastos(); //lista todos os gastos
 
-Gastos *listGastosByCategoria(int idCategoria); //retorna todos os gastos de uma dada categoria
+Gastos *listGastoByMonth(char *date); //lista os gastos com base em uma data
 
-Gastos *filterGastoByMonth(Gastos *listGastos, char *date); //lista os gastos com base em uma data
+Gastos *filterGastosByCategoria(Gastos *listGastos, int idCategoria); //retorna todos os gastos de uma dada categoria
 
 Gastos *filterGastoBetweenDate(Gastos *listGastos, char *initDate, char *endDate); //lista os gastos com base em dois meses dados
 

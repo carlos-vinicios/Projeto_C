@@ -15,6 +15,7 @@ createGastos::createGastos(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint); //define o tipo de janela aberta
+
     setComboBox(); //seta os elementos da combobox
     ui->dateInput->setDate(QDate::currentDate());//define a data do calendário para a data atual do sistema
     mainView3 = static_cast<MainWindow*>(parent); //realiza um casting para acessar os métodos públicos da classe pai

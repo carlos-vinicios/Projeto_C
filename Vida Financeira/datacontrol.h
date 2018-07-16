@@ -6,14 +6,14 @@
 //#define MAX_PASS 20
 //#define MAX_DATA 11
 
-struct Usuario{
+typedef struct _usuario_{
     int id;
     char *nome;
     char *nasc;
     char *desc;
     float renda;
     //char *password;
-};
+} Usuario;
 
 //struct Users {
 //    Usuario user;
@@ -23,13 +23,13 @@ struct Usuario{
 //typedef struct Users Usuarios; //define uma nova estrutura de dados
 const char UsuarioRota[] = "Data\\user_data.txt";
 
-struct Capital {
+typedef struct _capital_ {
     int id;
     char *data;
     char *desc;
     float valor;
 //    int id_user;
-};
+} Capital;
 
 struct _capitais_ {
     Capital capital;
@@ -39,14 +39,14 @@ struct _capitais_ {
 typedef struct _capitais_ Capitais; //define uma nova estrutura de dado para lista de recebimento de capitais
 const char CapitalRota[] = "Data\\capital_data.txt";
 
-struct Gasto {
+typedef struct _gasto_ {
     int id;
     char *data;
     char *desc;
     float valor;
     int tipo; // 1 - mensal 2 - rotativo
     int categoria; //categoria do gasto
-};
+} Gasto;
 
 struct _Gastos_ {
     Gasto gasto;
@@ -56,11 +56,11 @@ struct _Gastos_ {
 typedef struct _Gastos_ Gastos; //define uma nova estrutura de dado para lista de gastos
 const char GastoRota[] = "Data\\gasto_data.txt";
 
-struct Categoria {
+typedef struct _categoria_ {
     int id;
     char *nome;
     float total;
-};
+} Categoria;
 
 struct _Categorias_ {
     Categoria categoria;
@@ -70,13 +70,13 @@ struct _Categorias_ {
 typedef struct _Categorias_ Categorias;
 const char CategoriaRota[] = "Data\\categoria_data.txt";
 
-struct Investimento { //melhora com o tempo essa estrutura de dados para uma melhor experi?ncia do usuario
+typedef struct _investimento_ { //melhora com o tempo essa estrutura de dados para uma melhor experi?ncia do usuario
     int id;
     char *data;
     char *local;
     float valor;
 //    int id_user;
-};
+} Investimento;
 
 struct _investimentos_ {
     Investimento investimento;

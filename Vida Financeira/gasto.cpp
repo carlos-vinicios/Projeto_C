@@ -165,8 +165,7 @@ Gastos *listAllGastos(){
     linha = new char[size];
     listGastos = new Gastos();
     listGastos->next = NULL;
-    while(!feof(data)){ //pega cada linha transforma em struct Usuario e adiciona na lista de Usuarios
-        fgets(linha, size, data);
+    while(fgets(linha, size, data) != NULL){ //pega cada linha transforma em struct Usuario e adiciona na lista de Usuarios
         gasto = gastoDataToStruct(linha);
         nova = new Gastos();
         nova->gasto = gasto;
@@ -186,7 +185,33 @@ Gastos *listAllGastos(){
     return listGastos;
 }
 
-Gastos *listGastosByCategoria(int idCategoria){ //lista os gastos de uma dada categoria
+Gastos *filterGastosByCategoria(Gastos *listGastos, int idCategoria){ //lista os gastos de uma dada categoria
+    Gastos *lista, *nova, *old, *filtered;
+
+    filtered = new Gastos();
+    filtered->next = NULL;
+    for(lista = listGastos->next; lista != NULL; lista = lista->next){
+        if(lista->gasto.categoria == idCategoria){
+            nova = new Gastos();
+            nova->gasto = lista->gasto;
+            nova->next = NULL;
+            if(filtered->next == NULL){
+                filtered->next = nova;
+            }else{
+                old = filtered->next;
+                while(old->next != NULL)
+                    old = old->next; //passa para o pr?ximo ponteiro dentro da lista
+
+                old->next = nova;
+            }
+        }
+    }
+
+    delete lista;
+    return filtered;
+}
+
+Gastos *listGastoByMonth(char *month){ //lista os gastos com base em um mês dado
     FILE *data;
     Gastos *listGastos, *nova, *temp;
     Gasto gasto;
@@ -206,49 +231,24 @@ Gastos *listGastosByCategoria(int idCategoria){ //lista os gastos de uma dada ca
     listGastos->next = NULL;
     while(fgets(linha, size, data) != NULL){ //pega cada linha transforma em struct Usuario e adiciona na lista de Usuarios
         gasto = gastoDataToStruct(linha);
-        if(gasto.categoria == idCategoria){
-            nova = new Gastos();
-            nova->gasto = gasto;
-            nova->next = NULL;
-            if(listGastos->next == NULL){ //se a lista tiver v?zia s? adiciona o item
-                listGastos->next = nova;
-            }else{ //caso contrario, recebe o valor do prox item, percorre toda a lista at? encontrar o ?ltimo
-                temp = listGastos->next;
-                while(temp->next != NULL)
-                    temp = temp->next; //passa para o pr?ximo ponteiro dentro da lista
+        if(strstr(gasto.data, month) != NULL){
+                nova = new Gastos();
+                nova->gasto = gasto;
+                nova->next = NULL;
+                if(listGastos->next == NULL){ //se a lista tiver v?zia s? adiciona o item
+                    listGastos->next = nova;
+                }else{ //caso contrario, recebe o valor do prox item, percorre toda a lista at? encontrar o ?ltimo
+                    temp = listGastos->next;
+                    while(temp->next != NULL)
+                        temp = temp->next; //passa para o pr?ximo ponteiro dentro da lista
 
-                temp->next = nova; //o ponteiro est? apontando para a ?ltima posi??o onde ser? colocado o novo
-            }
+                    temp->next = nova; //o ponteiro est? apontando para a ?ltima posi??o onde ser? colocado o novo
+                }
         }
     }
-    delete[] linha;
+    delete linha;
     fclose(data);
     return listGastos;
-}
-
-Gastos *filterGastoByMonth(Gastos *listGastos, char *month){ //lista os gastos com base em um mês dado
-    Gastos *lista, *nova, *old, *filtered;
-
-    filtered = new Gastos();
-    filtered->next = NULL;
-    for(lista = listGastos->next; lista != NULL; lista = lista->next){
-        if(strstr(lista->gasto.data, month) != NULL){
-            nova = new Gastos();
-            nova->gasto = lista->gasto;
-            nova->next = NULL;
-            if(filtered->next == NULL){
-                filtered->next = nova;
-            }else{
-                old = filtered->next;
-                while(old->next != NULL)
-                    old = old->next; //passa para o pr?ximo ponteiro dentro da lista
-
-                old->next = nova;
-            }
-        }
-    }
-
-    return filtered;
 }
 
 Gastos *filterGastoBetweenDate(Gastos *listGastos, char *initDate, char *endDate){

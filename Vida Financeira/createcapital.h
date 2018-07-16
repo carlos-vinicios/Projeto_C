@@ -1,13 +1,13 @@
 #ifndef CREATECAPITAL_H
 #define CREATECAPITAL_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class CreateCapital;
 }
 
-class CreateCapital : public QWidget
+class CreateCapital : public QDialog
 {
     Q_OBJECT
 

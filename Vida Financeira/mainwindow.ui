@@ -31,8 +31,15 @@
   <property name="windowTitle">
    <string>Vida Financeira</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="icons.qrc">
+    <normaloff>:/Downloads/main_icon.png</normaloff>:/Downloads/main_icon.png</iconset>
+  </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
+  </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="enabled">
@@ -50,7 +57,7 @@
      </layout>
     </item>
     <item>
-     <layout class="QGridLayout" name="gridLayout_4">
+     <layout class="QGridLayout" name="mesSelections">
       <property name="topMargin">
        <number>20</number>
       </property>
@@ -61,25 +68,108 @@
        <widget class="QLabel" name="labelMes">
         <property name="font">
          <font>
-          <pointsize>16</pointsize>
+          <pointsize>-1</pointsize>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel{
+	color:rgb(255, 105, 46);
+	text-transform: uppercase;
+	font-size: 28px;
+	font-weight: 2px;
+}</string>
         </property>
         <property name="text">
          <string>TextLabel</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::PlainText</enum>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
       <item row="0" column="0" alignment="Qt::AlignRight">
        <widget class="QPushButton" name="mesAnterior">
-        <property name="text">
-         <string>Anterior</string>
+        <property name="minimumSize">
+         <size>
+          <width>46</width>
+          <height>46</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#mesAnterior{
+	background-color: rgb(255, 155, 88);
+	border-style: solid;
+	border-radius:23px;
+	max-width:46px;
+	max-height:46px;
+	min-width:46px;
+	min-height:46px;
+}</string>
+        </property>
+        <property name="icon">
+         <iconset resource="icons.qrc">
+          <normaloff>:/Downloads/if_previous_308957.png</normaloff>:/Downloads/if_previous_308957.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>35</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="default">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
       <item row="0" column="2" alignment="Qt::AlignLeft">
        <widget class="QPushButton" name="mesSeguin">
-        <property name="text">
-         <string>Seguinte</string>
+        <property name="minimumSize">
+         <size>
+          <width>46</width>
+          <height>46</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 155, 88);
+border-style: solid;
+border-radius:23px;
+max-width:46px;
+max-height:46px;
+min-width:46px;
+min-height:46px;</string>
+        </property>
+        <property name="icon">
+         <iconset resource="icons.qrc">
+          <normaloff>:/Downloads/if_next_308956.png</normaloff>:/Downloads/if_next_308956.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>35</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -87,6 +177,30 @@
     </item>
     <item>
      <widget class="QTabWidget" name="tabWidget">
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">::tab:selected {
+    background-color: rgb(255, 105, 46);
+	color:#FFF;
+}
+::tab {
+	color:#FFF;
+	background-color: rgb(255, 155, 88);
+	border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+	padding: 2px 15px;
+}
+::tab:hover {
+  background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #ff9b58, stop: 0.4 #ff7037,
+                                stop: 0.5 #ff7037, stop: 1.0 #ff9b58);
+}</string>
+      </property>
       <property name="currentIndex">
        <number>0</number>
       </property>
@@ -102,10 +216,35 @@
           </item>
           <item row="1" column="0">
            <layout class="QGridLayout" name="gridLayoutControlButtons">
-            <item row="0" column="3" alignment="Qt::AlignRight">
+            <item row="0" column="3" alignment="Qt::AlignLeft">
              <widget class="QPushButton" name="addGastoButton">
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="layoutDirection">
+               <enum>Qt::RightToLeft</enum>
+              </property>
               <property name="text">
                <string>Adicionar</string>
+              </property>
+              <property name="icon">
+               <iconset resource="icons.qrc">
+                <normaloff>:/Downloads/icons8-plus.svg</normaloff>:/Downloads/icons8-plus.svg</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>40</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -122,10 +261,32 @@
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
          <layout class="QGridLayout" name="layoutInvestimentos">
-          <item row="0" column="0" alignment="Qt::AlignRight">
+          <item row="0" column="0" alignment="Qt::AlignLeft">
            <widget class="QPushButton" name="addInvestimentos">
+            <property name="font">
+             <font>
+              <family>Segoe UI</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
             <property name="text">
              <string>Adicionar</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons.qrc">
+              <normaloff>:/Downloads/icons8-plus.svg</normaloff>:/Downloads/icons8-plus.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -134,19 +295,70 @@
        </layout>
       </widget>
       <widget class="QWidget" name="tabCapitais">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <attribute name="title">
         <string>Capitais</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
          <layout class="QGridLayout" name="layoutCapitais">
-          <item row="0" column="0" alignment="Qt::AlignRight">
+          <item row="0" column="0" alignment="Qt::AlignLeft">
            <widget class="QPushButton" name="addCapitais">
+            <property name="font">
+             <font>
+              <family>Segoe UI</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
             <property name="text">
              <string>Adicionar</string>
             </property>
+            <property name="icon">
+             <iconset resource="icons.qrc">
+              <normaloff>:/Downloads/icons8-plus.svg</normaloff>:/Downloads/icons8-plus.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabEstatisticas">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <attribute name="title">
+        <string>Estatísticas</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <layout class="QGridLayout" name="gridLayoutEstatisticas" rowminimumheight="0">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinAndMaxSize</enum>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
          </layout>
         </item>
        </layout>
@@ -157,6 +369,8 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

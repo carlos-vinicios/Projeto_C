@@ -15,6 +15,7 @@ char *getId(char *linha){ //retorna o id de uma dada linha
                         id[index] = linha[k];
                         index++;
                     }
+                    id[index] = '\0';
                     break;
                 }
             }
@@ -59,11 +60,13 @@ int dataIntCol(char *linha, int inicio, int fim){ //retorna o id de referencia, 
     char *valor;
     int c = 0, i;
     int id;
-    valor = new char[fim-inicio+1];
+
+    valor = new char[fim-inicio];
     for(i = inicio; i < fim; i++){
         valor[c] = linha[i];
         c++;
     }
+    valor[c] = '\0';
     id = atoi(valor);
     delete valor;
     return id;
@@ -88,6 +91,7 @@ float dataFloatCol(char *linha, int inicio, int fim){ //retorna o valor da renda
         valor[c] = linha[i];
         c++;
     }
+    valor[c] = '\0';
     valorF = strtof(valor, NULL);
     delete valor;
     return valorF;

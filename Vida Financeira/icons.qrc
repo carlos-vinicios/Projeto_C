@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../../../../Downloads/icons8-plus.svg</file>
+        <file>../../../../Downloads/if_next_308956.png</file>
+        <file>../../../../Downloads/if_previous_308957.png</file>
+        <file>../../../../Downloads/background.jpg</file>
+        <file>../../../../Downloads/background2.jpg</file>
+        <file>../../../../Downloads/main_icon.png</file>
+    </qresource>
+</RCC>

@@ -61,3 +61,9 @@ FORMS += \
     createcatgasto.ui \
     createcapital.ui \
     createinvestimento.ui
+
+RESOURCES += \
+    icons.qrc
+
+DISTFILES += \
+    ../../../../Downloads/download (1).jpg

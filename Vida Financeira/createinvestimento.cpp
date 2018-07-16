@@ -8,7 +8,7 @@
 MainWindow *mainView;
 
 CreateInvestimento::CreateInvestimento(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::CreateInvestimento)
 {
     ui->setupUi(this);
