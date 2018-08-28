@@ -33,14 +33,14 @@
   </property>
   <property name="windowIcon">
    <iconset resource="icons.qrc">
-    <normaloff>:/Downloads/main_icon.png</normaloff>:/Downloads/main_icon.png</iconset>
+    <normaloff>:/Icons/main_icon.png</normaloff>:/Icons/main_icon.png</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
   <property name="styleSheet">
    <string notr="true">QDialog{
-	background-image: url(:/Downloads/background2.jpg);
+	background-image: url(:/Icons/background2.jpg);
 }
 QLabel{
 	color:#FF692E;

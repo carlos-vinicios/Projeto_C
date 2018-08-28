@@ -97,10 +97,13 @@ void createGastos::on_createCatGastoButton_clicked()
 
 void createGastos::setComboBox(){ //função que cria os elementos da combobox
     ui->categoriasComboBox->clear();
-    int i=0;
-    Categorias *todasCategorias;
+    int i=0, qtd=0;
+    Categorias *todasCategorias, *lista;
     todasCategorias = listAllCategorias();
-    idCategorias = new int[sizeof(*todasCategorias)];
+    for(lista = todasCategorias->next; lista != NULL; lista = lista->next){
+        qtd++;
+    }
+    idCategorias = new int[qtd];
     while(todasCategorias != NULL){
         QString nome = QString::asprintf(todasCategorias->categoria.nome);
         ui->categoriasComboBox->addItem(nome);

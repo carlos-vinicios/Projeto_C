@@ -1,0 +1,1 @@
+id=1;data=16/07/2018;local=CDI;valor=100,00;

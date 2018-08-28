@@ -165,7 +165,7 @@ Gastos *listAllGastos(){
     linha = new char[size];
     listGastos = new Gastos();
     listGastos->next = NULL;
-    while(fgets(linha, size, data) != NULL){ //pega cada linha transforma em struct Usuario e adiciona na lista de Usuarios
+    while(fgets(linha, size, data) != NULL && strlen(linha) > 4){ //pega cada linha transforma em struct Usuario e adiciona na lista de Usuarios
         gasto = gastoDataToStruct(linha);
         nova = new Gastos();
         nova->gasto = gasto;
@@ -229,7 +229,7 @@ Gastos *listGastoByMonth(char *month){ //lista os gastos com base em um mês dad
     linha = new char[size];
     listGastos = new Gastos();
     listGastos->next = NULL;
-    while(fgets(linha, size, data) != NULL){ //pega cada linha transforma em struct Usuario e adiciona na lista de Usuarios
+    while(fgets(linha, size, data) != NULL && strlen(linha) > 4){ //pega cada linha transforma em struct Usuario e adiciona na lista de Usuarios
         gasto = gastoDataToStruct(linha);
         if(strstr(gasto.data, month) != NULL){
                 nova = new Gastos();

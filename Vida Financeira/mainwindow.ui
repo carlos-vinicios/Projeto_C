@@ -33,13 +33,18 @@
   </property>
   <property name="windowIcon">
    <iconset resource="icons.qrc">
-    <normaloff>:/Downloads/main_icon.png</normaloff>:/Downloads/main_icon.png</iconset>
+    <normaloff>:/Icons/main_icon.png</normaloff>:/Icons/main_icon.png</iconset>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
   </property>
   <property name="autoFillBackground">
    <bool>true</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#MainWindow{
+visibility: &quot;Maximized&quot;;
+}</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="enabled">
@@ -114,7 +119,7 @@
         </property>
         <property name="icon">
          <iconset resource="icons.qrc">
-          <normaloff>:/Downloads/if_previous_308957.png</normaloff>:/Downloads/if_previous_308957.png</iconset>
+          <normaloff>:/Icons/if_previous_308957.png</normaloff>:/Icons/if_previous_308957.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -160,7 +165,7 @@ min-height:46px;</string>
         </property>
         <property name="icon">
          <iconset resource="icons.qrc">
-          <normaloff>:/Downloads/if_next_308956.png</normaloff>:/Downloads/if_next_308956.png</iconset>
+          <normaloff>:/Icons/if_next_308956.png</normaloff>:/Icons/if_next_308956.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -235,7 +240,7 @@ min-height:46px;</string>
               </property>
               <property name="icon">
                <iconset resource="icons.qrc">
-                <normaloff>:/Downloads/icons8-plus.svg</normaloff>:/Downloads/icons8-plus.svg</iconset>
+                <normaloff>:/Icons/icons8-plus.svg</normaloff>:/Icons/icons8-plus.svg</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -277,7 +282,7 @@ min-height:46px;</string>
             </property>
             <property name="icon">
              <iconset resource="icons.qrc">
-              <normaloff>:/Downloads/icons8-plus.svg</normaloff>:/Downloads/icons8-plus.svg</iconset>
+              <normaloff>:/Icons/icons8-plus.svg</normaloff>:/Icons/icons8-plus.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -323,7 +328,7 @@ min-height:46px;</string>
             </property>
             <property name="icon">
              <iconset resource="icons.qrc">
-              <normaloff>:/Downloads/icons8-plus.svg</normaloff>:/Downloads/icons8-plus.svg</iconset>
+              <normaloff>:/Icons/icons8-plus.svg</normaloff>:/Icons/icons8-plus.svg</iconset>
             </property>
             <property name="iconSize">
              <size>

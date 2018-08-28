@@ -19,9 +19,8 @@ int positionById(int Id, int size, const char *arq){ //retorna a posição do pont
     }
     rewind(data);
     linha = new char[size];
-    while (!feof(data)){
+    while (fgets(linha, sizeof(char), data) != NULL){
         position = ftell(data);
-        fgets(linha, size * sizeof(char), data);
         id = getId(linha); //pega o id de cada linha
         if( atoi(id) == Id ){ //realiza a comparação de valores pegando, transformando o id para char *
             delete linha;
@@ -81,8 +80,7 @@ int update(const char *arq, char *newLine, int lineLen, int id){
     rewind(data);
     newTextFile = new char[size+lineLen];
     linha = new char[size];
-    while(!feof(data)){
-        fgets(linha, size, data);
+    while(fgets(linha, size, data) != NULL){
         if(linha[0] != '\n'){
             if(atoi(getId(linha)) != id){
                 if(first){
@@ -126,7 +124,7 @@ int deletar(const char *arq, int id){
     rewind(data);
     newTextFile = new char[size];
     linha = new char[size];
-    while(!feof(data)){
+    while(fgets(linha, size, data) != NULL){
         fgets(linha, size, data);
         if(linha[0] != '\n'){
             if(atoi(getId(linha)) != id){

@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "QDesktopWidget.h"
+#include "QDesktopWidget"
 #include "QHBoxLayout"
 #include "QVBoxLayout"
 #include "QHeaderView"
@@ -10,6 +10,7 @@
 #include "gasto.h"
 #include "investimento.h"
 #include "capital.h"
+#include "QDebug"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -19,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     QPalette pal = this->palette();
-    QPixmap bkgnd(":/Downloads/background2.jpg");
+    QPixmap bkgnd(":/Icons/background2.jpg");
     pal.setBrush(QPalette::Window, bkgnd);
     this->setPalette(pal);
 
@@ -85,6 +86,7 @@ void MainWindow::on_mesAnterior_clicked()
     updateGastos(newData, 0);
     updateCapitais(newData, 0);
     updateInvest(newData, 0);
+    ui->labelMes->repaint();
 }
 
 void MainWindow::on_mesSeguin_clicked()
@@ -102,6 +104,7 @@ void MainWindow::on_mesSeguin_clicked()
         updateGastos(newData, 0);
         updateCapitais(newData, 0);
         updateInvest(newData, 0);
+        ui->labelMes->repaint();
     }
 }
 
@@ -137,7 +140,7 @@ void MainWindow::startGastos(QDate data){
     Categorias *allCategorias;
     QString textGastoMes;
     int row = 0, col = 0;
-    float gastoTotal = 0, rendaRestante;
+    float gastoTotal = 0, rendaRestante = 0;
 
     allCategorias = listAllCategorias();
     allCategorias = allCategorias->next;
@@ -184,7 +187,7 @@ void MainWindow::createDivGasto(Categoria cat, int row, int col, float *gastoTot
     gastosCat = listGastoByMonth(data.toString("MM/yyyy").toLatin1().data());
     gastosCat = filterGastosByCategoria(gastosCat, cat.id);
 
-    tmp = gastosCat; //realiza o calculo do valor total da categoria
+    tmp = gastosCat->next; //realiza o calculo do valor total da categoria
     while( tmp != NULL){
         valorCat += tmp->gasto.valor;
         tmp = tmp->next;

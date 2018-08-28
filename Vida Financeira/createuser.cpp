@@ -46,6 +46,8 @@ void createUser::on_saveButton_clicked()
         case 1:
             msgBox.setText("Cadastro realizado com sucesso!");
             msgBox.exec();
+            qApp->quit();
+            QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
             break;
         case 0:
             msgBox.setText("O nome não pode está vázio!");
@@ -68,6 +70,4 @@ void createUser::on_saveButton_clicked()
             msgBox.exec();
             break;
     }
-    qApp->quit();
-    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
 }

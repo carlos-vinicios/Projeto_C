@@ -1,0 +1,5 @@
+id=1;data=16/07/2018;desc=Teste;valor=100,00;tipo=2;categoria=1;
+id=2;data=16/07/2018;desc=teste;valor=50,00;tipo=2;categoria=2;
+id=3;data=16/07/2018;desc=Teste;valor=40,00;tipo=2;categoria=4;
+id=4;data=16/07/2018;desc=Teste;valor=100,00;tipo=2;categoria=5;
+id=5;data=14/06/2018;desc=Gasolina;valor=100,00;tipo=2;categoria=3;

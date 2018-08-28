@@ -5,6 +5,7 @@
 #include "datacontrol.h"
 #include "filemanager.h"
 #include "gasto.h"
+#include "QDebug"
 
 void writeData(FILE *data, Categoria categoria){
     fprintf(data, "id=%d;", categoria.id);
@@ -20,7 +21,7 @@ Categoria categoriaDataToStruct(char *linha){
           do{
             index--;
           }while(linha[index] != '='); //volta o contador para o primeiro =, significando o inicio do dado
-          index++; //garante que vá para o primeiro elemento do dado
+          index++; //garante que v? para o primeiro elemento do dado
           switch (exec) {
             case 1:
               categoria.nome = new char[i - index];
@@ -121,19 +122,20 @@ Categorias *listAllCategorias(){
     linha = new char[size];
     listCategorias = new Categorias();
     listCategorias->next = NULL;
-    while(fgets(linha, size, data) != NULL){ //pega cada linha transforma em struct Usuario e adiciona na lista de Usuarios
+    while(fgets(linha, size, data) != NULL && strlen(linha) > 4){ //pega cada linha transforma em struct Usuario e adiciona na lista de Usuarios
         categoria = categoriaDataToStruct(linha);
+        qDebug() << categoria.nome;
         nova = new Categorias();
         nova->categoria = categoria;
         nova->next = NULL;
-        if(listCategorias->next == NULL){ //se a lista tiver vázia só adiciona o item
+        if(listCategorias->next == NULL){ //se a lista tiver v?zia '    s? adiciona o item
             listCategorias->next = nova;
-        }else{ //caso contrario, recebe o valor do prox item, percorre toda a lista até encontrar o último
+        }else{ //caso contrario, recebe o valor do prox item, percorre toda a lista at? encontrar o ?ltimo
             temp = listCategorias->next;
             while(temp->next != NULL)
-                temp = temp->next; //passa para o próximo ponteiro dentro da lista
+                temp = temp->next; //passa para o pr?ximo ponteiro dentro da lista
 
-            temp->next = nova; //o ponteiro está apontando para a última posição onde será colocado o novo
+            temp->next = nova; //o ponteiro est? apontando para a ?ltima posi??o onde ser? colocado o novo
         }
     }
     delete linha;

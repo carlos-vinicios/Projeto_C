@@ -149,7 +149,7 @@ Investimentos *listAllInvestimentos(){
     linha = new char[size];
     listInvestimentos = new Investimentos();
     listInvestimentos->next = NULL;
-    while(fgets(linha, size, data) != NULL){ //pega cada linha transforma em struct Investimento e adiciona a lista
+    while(fgets(linha, size, data) != NULL && strlen(linha) > 4){ //pega cada linha transforma em struct Investimento e adiciona a lista
         investimento = investimentoDataToStruct(linha);
         nova = new Investimentos();
         nova->investimento = investimento;

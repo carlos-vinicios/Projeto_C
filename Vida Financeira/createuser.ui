@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="icons.qrc">
-    <normaloff>:/Downloads/main_icon.png</normaloff>:/Downloads/main_icon.png</iconset>
+    <normaloff>:/Icons/icons8-plus.svg</normaloff>:/Icons/icons8-plus.svg</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">

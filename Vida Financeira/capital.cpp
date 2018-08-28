@@ -146,7 +146,7 @@ Capitais *listAllCapitais(){
     linha = new char[size];
     listCapitais = new Capitais();
     listCapitais->next = NULL;
-    while(fgets(linha, size, data) != NULL){ //pega cada linha transforma em struct Capital e adiciona na lista de Capitais
+    while(fgets(linha, size, data) != NULL && strlen(linha) > 4){ //pega cada linha transforma em struct Capital e adiciona na lista de Capitais
         capital = capitalDataToStruct(linha);
         nova = new Capitais();
         nova->capital = capital;

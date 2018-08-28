@@ -62,7 +62,7 @@ private:
     QTableWidget *tableInvest;
     QTableWidget *tableCapital;
     QLabel *userInvestido;
-    QLabel *userGastoMes;
+    QLabel *userGastoMes = NULL;
     QString headerTextStyle = "color:rgb(255, 105, 46); font-size:18px; font: large 'Segoe UI';";
     int mes, ano;
 };

@@ -21,7 +21,7 @@ typedef struct _usuario_{
 //};
 
 //typedef struct Users Usuarios; //define uma nova estrutura de dados
-const char UsuarioRota[] = "Data\\user_data.txt";
+const char UsuarioRota[] = "Data/user_data.txt";
 
 typedef struct _capital_ {
     int id;
@@ -37,7 +37,7 @@ struct _capitais_ {
 };
 
 typedef struct _capitais_ Capitais; //define uma nova estrutura de dado para lista de recebimento de capitais
-const char CapitalRota[] = "Data\\capital_data.txt";
+const char CapitalRota[] = "Data/capital_data.txt";
 
 typedef struct _gasto_ {
     int id;
@@ -54,7 +54,7 @@ struct _Gastos_ {
 };
 
 typedef struct _Gastos_ Gastos; //define uma nova estrutura de dado para lista de gastos
-const char GastoRota[] = "Data\\gasto_data.txt";
+const char GastoRota[] = "Data/gasto_data.txt";
 
 typedef struct _categoria_ {
     int id;
@@ -68,7 +68,7 @@ struct _Categorias_ {
 };
 
 typedef struct _Categorias_ Categorias;
-const char CategoriaRota[] = "Data\\categoria_data.txt";
+const char CategoriaRota[] = "Data/categoria_data.bat";
 
 typedef struct _investimento_ { //melhora com o tempo essa estrutura de dados para uma melhor experi?ncia do usuario
     int id;
@@ -84,7 +84,7 @@ struct _investimentos_ {
 };
 
 typedef struct _investimentos_ Investimentos;
-const char InvestimentoRota[] = "Data\\investimento_data.txt";
+const char InvestimentoRota[] = "Data/investimento_data.txt";
 
 char *getId(char *linha); //retorna o id da linha
 
